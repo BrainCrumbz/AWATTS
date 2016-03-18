@@ -23,10 +23,10 @@ var config = {
     'main': common.paths.mainEntry,
     
   },
-    
+  
   output: {
 
-    path: common.paths.dist,
+    path: common.paths.buildOutput,
     filename: common.files.bundle,
     sourceMapFilename: common.files.sourceMap,
     chunkFilename: common.files.chunk,

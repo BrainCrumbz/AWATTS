@@ -29,7 +29,7 @@ module.exports = function(config) {
     exclude: [
       common.paths.nodeModules, // skip all node modules
       common.paths.typings, // skip all type definitions
-      common.paths.dist, // skip output
+      common.paths.buildOutput, // skip output
       common.paths.serverRoot, // skip server
     ],
 

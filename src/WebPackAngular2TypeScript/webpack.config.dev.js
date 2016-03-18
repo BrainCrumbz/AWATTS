@@ -56,7 +56,7 @@ var config = {
   
   output: {
 
-    path: common.paths.dist,
+    path: common.paths.buildOutput,
     filename: common.files.bundle,
     sourceMapFilename: common.files.sourceMap,
     chunkFilename: common.files.chunk,
@@ -116,7 +116,7 @@ var config = {
 
     publicPath: '/',
     
-    contentBase: 'dist/',
+    contentBase: 'buildOutput/',
     
     proxy: {
       // proxied to express backend server

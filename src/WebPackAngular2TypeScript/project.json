@@ -21,7 +21,7 @@
   },
 
   "exclude": [
-    "dist",
+    "buildOutput",
     "wwwroot",
     "node_modules"
   ],

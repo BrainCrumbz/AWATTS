@@ -1,7 +1,9 @@
 var path = require('path');
 
 var ports = {
+  // local dev server port
   default: 51254,
+  // local hot reload dev server port
   reload: 3000,
 };
 
@@ -15,7 +17,7 @@ var paths = {
   clientRoot: clientRoot,
   serverRoot: path.resolve(__dirname, 'src', 'server'),
   nodeModules: path.resolve(__dirname, 'node_modules'),
-  dist: path.resolve(__dirname, 'dist'),
+  buildOutput: path.resolve(__dirname, 'buildOutput'),
   typings: path.resolve(__dirname, 'typings'),
   staticFiles: path.join(clientRoot, 'static'),
   coverage: path.resolve(__dirname, 'coverage'),
@@ -50,7 +52,7 @@ var preLoaders = {
     exclude: [
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
-      paths.dist, // skip output
+      paths.buildOutput, // skip output
       paths.serverRoot, // skip server
     ],
   },
@@ -69,7 +71,7 @@ var loaders = {
     exclude: [
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
-      paths.dist, // skip output
+      paths.buildOutput, // skip output
       paths.serverRoot, // skip server
        /\.(spec|e2e|async)\.ts$/, // skip all test and async TS files 
     ],
@@ -84,7 +86,7 @@ var loaders = {
     exclude: [
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
-      paths.dist, // skip output
+      paths.buildOutput, // skip output
       paths.serverRoot, // skip server
        /\.(e2e|async)\.ts$/, // skip end-to-end test and async TS files 
     ],
@@ -103,7 +105,7 @@ var loaders = {
     exclude: [
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
-      paths.dist, // skip output
+      paths.buildOutput, // skip output
       paths.serverRoot, // skip server
     ],
   },
@@ -118,7 +120,7 @@ var loaders = {
     exclude: [
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
-      paths.dist, // skip output
+      paths.buildOutput, // skip output
       paths.serverRoot, // skip server
     ],
   },
@@ -139,7 +141,7 @@ var postLoaders = {
       /\.(e2e|spec)\.ts$/, // skip all test files
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
-      paths.dist, // skip output
+      paths.buildOutput, // skip output
       paths.serverRoot, // skip server
     ],
   },
