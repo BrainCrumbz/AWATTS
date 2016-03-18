@@ -10,9 +10,6 @@ using Microsoft.AspNet.FileProviders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using System.IO;
-/*
-using Newtonsoft.Json.Serialization;
-*/
 
 namespace WebPackAngular2TypeScript
 {
@@ -23,13 +20,6 @@ namespace WebPackAngular2TypeScript
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            /*
-            services.AddMvc().AddJsonOptions(options =>
-            {
-                options.SerializerSettings.ContractResolver =
-                    new CamelCasePropertyNamesContractResolver();
-            });
-            */
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +39,7 @@ namespace WebPackAngular2TypeScript
                 config.MapRoute(
                     name: "Default",
                     template: "{controller}/{action}/{id?}",
-                    defaults: new { controller = "Home", action = "Home" }
+                    defaults: new { controller = "Home", action = "Index" }
                 );
             });
         }
