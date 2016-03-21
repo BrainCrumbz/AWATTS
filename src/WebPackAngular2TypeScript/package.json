@@ -57,9 +57,5 @@
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1"
   },
-  "-vs-binding": {
-    "Clean": [
-      "clean"
-    ]
-  }
+  "-vs-binding": {}
 }

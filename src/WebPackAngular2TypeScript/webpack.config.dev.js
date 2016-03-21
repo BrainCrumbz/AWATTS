@@ -3,15 +3,15 @@ var webpack = require('webpack');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var common = require('./webpack.common.js');
 
+// ensure development environment
+process.env.NODE_ENV = 'development';
+
 // detect development mode from environment
 var devMode = process.env.DEV_MODE;
 
 if (['build', 'reload'].indexOf(devMode) < 0) {
   devMode = 'build';
 }
-
-// ensure development environment
-process.env.NODE_ENV = 'development';
 
 var config = {
 
