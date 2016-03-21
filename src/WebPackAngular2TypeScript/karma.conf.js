@@ -30,7 +30,7 @@ module.exports = function(config) {
       common.paths.nodeModules, // skip all node modules
       common.paths.typings, // skip all type definitions
       common.paths.buildOutput, // skip output
-      common.paths.serverRoot, // skip server
+      common.paths.serverPaths, // skip server
     ],
 
     // list of files/patterns to load in the browser, serve or watch. Order is important.

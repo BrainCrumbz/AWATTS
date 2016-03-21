@@ -15,7 +15,7 @@ var clientRoot = path.resolve(__dirname, 'client');
 
 var paths = {
   clientRoot: clientRoot,
-  serverRoot: path.resolve(__dirname, 'src', 'server'),
+  serverPaths: path.join(path.resolve(__dirname), '(Controllers|Views)'),
   nodeModules: path.resolve(__dirname, 'node_modules'),
   buildOutput: path.resolve(__dirname, 'buildOutput'),
   typings: path.resolve(__dirname, 'typings'),
@@ -53,7 +53,7 @@ var preLoaders = {
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
       paths.buildOutput, // skip output
-      paths.serverRoot, // skip server
+      paths.serverPaths, // skip server
     ],
   },
   
@@ -72,7 +72,7 @@ var loaders = {
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
       paths.buildOutput, // skip output
-      paths.serverRoot, // skip server
+      paths.serverPaths, // skip server
        /\.(spec|e2e|async)\.ts$/, // skip all test and async TS files 
     ],
   },
@@ -87,7 +87,7 @@ var loaders = {
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
       paths.buildOutput, // skip output
-      paths.serverRoot, // skip server
+      paths.serverPaths, // skip server
        /\.(e2e|async)\.ts$/, // skip end-to-end test and async TS files 
     ],
   },
@@ -106,7 +106,7 @@ var loaders = {
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
       paths.buildOutput, // skip output
-      paths.serverRoot, // skip server
+      paths.serverPaths, // skip server
     ],
   },
   
@@ -121,7 +121,7 @@ var loaders = {
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
       paths.buildOutput, // skip output
-      paths.serverRoot, // skip server
+      paths.serverPaths, // skip server
     ],
   },
   
@@ -142,7 +142,7 @@ var postLoaders = {
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
       paths.buildOutput, // skip output
-      paths.serverRoot, // skip server
+      paths.serverPaths, // skip server
     ],
   },
   
