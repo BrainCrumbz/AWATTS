@@ -11,7 +11,7 @@ var urls = {
   public: '/',
 };
 
-var clientRoot = path.resolve(__dirname, 'src', 'client');
+var clientRoot = path.resolve(__dirname, 'client');
 
 var paths = {
   clientRoot: clientRoot,
