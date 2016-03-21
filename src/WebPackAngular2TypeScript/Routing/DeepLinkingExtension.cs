@@ -53,8 +53,6 @@ namespace WebPackAngular2TypeScript.Routing
 
             options.RedirectUrlPath = new PathString(clientRedirectPath);
 
-            app.UseDefaultFiles(options.FileServerOptions.DefaultFilesOptions);
-
             return useMiddleware();
         }
     }
