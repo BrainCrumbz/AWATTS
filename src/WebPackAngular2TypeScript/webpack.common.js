@@ -11,20 +11,22 @@ var urls = {
   public: '/',
 };
 
-var clientRoot = path.resolve(__dirname, 'client');
+var projectRoot = path.resolve(__dirname);
+
+var clientRoot = path.join(projectRoot, 'client');
 
 var paths = {
   clientRoot: clientRoot,
-  serverPaths: path.join(path.resolve(__dirname), '(Controllers|Views)'),
-  nodeModules: path.resolve(__dirname, 'node_modules'),
-  buildOutput: path.resolve(__dirname, 'buildOutput'),
-  typings: path.resolve(__dirname, 'typings'),
-  staticFiles: path.join(clientRoot, 'static'),
-  coverage: path.resolve(__dirname, 'coverage'),
+  serverPaths: path.join(projectRoot, '(Controllers|Views)'),
+  nodeModules: path.join(projectRoot, 'node_modules'),
+  buildOutput: path.join(projectRoot, 'buildOutput'),
+  typings: path.join(projectRoot, 'typings'),
+  coverage: path.join(projectRoot, 'coverage'),
   
   mainEntry: path.join(clientRoot, 'bootstrap.ts'),
   vendorEntry: path.join(clientRoot, 'vendor.ts'),
   testEntry: path.join(clientRoot, 'karma-entry.js'),
+  staticFiles: path.join(clientRoot, 'static'),
 };
 
 var files = {
