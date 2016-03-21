@@ -13,7 +13,7 @@
     "prebuild-prod": "npm run clean",
     "build-prod": "webpack --config ./webpack.config.prod.js --display-error-details --profile --colors",
     "build": "npm run build-dev",
-    "serve-dev": "webpack-dev-server --config ./webpack.config.dev.js",
+    "serve-dev": "set DEV_MODE=reload&&webpack-dev-server --config ./webpack.config.dev.js",
     "preserve-prod": "npm run build-prod",
     "serve-prod": "echo \"This is only to run preserve-prod command\" ",
     "serve": "npm run serve-dev",

@@ -3,23 +3,15 @@ var webpack = require('webpack');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var common = require('./webpack.common.js');
 
+// detect development mode from environment
+var devMode = process.env.DEV_MODE;
+
+if (['build', 'reload'].indexOf(devMode) < 0) {
+  devMode = 'build';
+}
+
 // ensure development environment
 process.env.NODE_ENV = 'development';
-
-var protocol = 'http';
-var hostname = 'localhost';
-
-var defaultServerUrl = url.format({
-  protocol: protocol,
-  hostname: hostname,
-  port: common.ports.default,
-});
-
-var reloadServerUrl = url.format({
-  protocol: protocol,
-  hostname: hostname,
-  port: common.ports.reload,
-});
 
 var config = {
 
@@ -39,18 +31,8 @@ var config = {
     
     'vendor': common.paths.vendorEntry,
     
-    'main': [
-
-      // For automatic page refresh, inline mode
-      'webpack-dev-server/client?' + reloadServerUrl,
-
-      // For hot module replacement
-      'webpack/hot/dev-server',
-
-      // Client application main entry point
-      common.paths.mainEntry,
-      
-    ],
+    // Client application main entry point
+    'main': common.paths.mainEntry,
     
   },
   
@@ -104,13 +86,43 @@ var config = {
       from: common.paths.staticFiles, 
     }]),
     
-    // We have to manually add the Hot Replacement plugin when running from Node
-    new webpack.HotModuleReplacementPlugin(),
-    
   ],
   
+};
+
+// differences when reloading in development
+if (devMode == 'reload') {
+
+  var protocol = 'http';
+  var hostname = 'localhost';
+
+  var defaultServerUrl = url.format({
+    protocol: protocol,
+    hostname: hostname,
+    port: common.ports.default,
+  });
+
+  var reloadServerUrl = url.format({
+    protocol: protocol,
+    hostname: hostname,
+    port: common.ports.reload,
+  });
+
+  config.entry['main'] = [
+
+    // For automatic page refresh, inline mode
+    'webpack-dev-server/client?' + reloadServerUrl,
+
+    // For hot module replacement
+    'webpack/hot/dev-server',
+
+    // Client application main entry point
+    common.paths.mainEntry,
+
+  ];
+  
   // webpack dev server configuration
-  devServer: {
+  config.devServer = {
 
     port: common.ports.reload,
 
@@ -133,14 +145,21 @@ var config = {
 
     watchOptions: { aggregateTimeout: 300, poll: 1000 },
     
-    // The rest is terminal configurations
+    // The rest is terminal configuration
     console: true,
     quiet: false,
     noInfo: true,
     stats: { colors: true },
     
-  },
+  };
   
-};
+  config.plugins.push(
+
+    // We have to manually add the Hot Replacement plugin when running from Node
+    new webpack.HotModuleReplacementPlugin()
+
+  );
+  
+}
 
 module.exports = config;
