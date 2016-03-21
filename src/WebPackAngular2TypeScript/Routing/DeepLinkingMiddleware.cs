@@ -26,12 +26,14 @@ namespace WebPackAngular2TypeScript.Routing
             // try to resolve the request with default static file middleware
             await staticFileMiddleware.Invoke(context);
 
-            if (context.Response.StatusCode == 404)
+            if (context.Response.StatusCode == StatusCodes.Status404NotFound)
             {
                 var redirectUrlPath = FindRedirection(context);
 
                 if (redirectUrlPath != unresolvedPath)
                 {
+                    // if resolved, reset response as successful
+                    context.Response.StatusCode = StatusCodes.Status200OK;
                     context.Request.Path = redirectUrlPath;
 
                     await staticFileMiddleware.Invoke(context);
