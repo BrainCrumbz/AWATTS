@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.FileProviders;
-using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.StaticFiles;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebPackAngular2TypeScript.Routing
 {
@@ -21,10 +17,12 @@ namespace WebPackAngular2TypeScript.Routing
             string clientRedirectPath,
             IEnumerable<string> clientRoutePaths = null)
         {
+            bool usingStrict = (clientRoutePaths != null);
+
             DeepLinkingOptions options;
             Func<IApplicationBuilder> useMiddleware;
 
-            if (clientRoutePaths == null)
+            if (!usingStrict)
             {
                 options = new DeepLinkingOptions();
 
