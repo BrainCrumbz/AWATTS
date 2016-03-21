@@ -4,10 +4,10 @@
   "description": "",
   "main": "src/server/server.js",
   "scripts": {
-    "deep-clean": "npm cache clean && rimraf ./node_modules ./typings ./buildOutput",
     "clean": "rimraf ./buildOutput/*",
-    "typings-install": "typings install",
-    "postinstall": "npm run typings-install",
+    "clean-deep": "npm cache clean && rimraf ./node_modules ./typings ./buildOutput",
+    "install-typings": "typings install",
+    "postinstall": "npm run install-typings",
     "prebuild-dev": "npm run clean",
     "build-dev": "webpack --config ./webpack.config.dev.js --display-error-details --profile --colors",
     "prebuild-prod": "npm run clean",
