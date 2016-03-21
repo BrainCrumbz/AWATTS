@@ -29,18 +29,12 @@ namespace WebPackAngular2TypeScript.Routing
             // try to resolve the request with default static file middleware
             await staticFileMiddleware.Invoke(context);
 
-            // TODO remove
-            Console.WriteLine(context.Request.Path + ": " + context.Response.StatusCode);
-
             // route to root path if the status code is 404
             if (context.Response.StatusCode == 404)
             {
-                context.Request.Path = options.EntryPath;
+                context.Request.Path = options.RelativeRedirectUrlPath;
 
                 await staticFileMiddleware.Invoke(context);
-
-                // TODO remove
-                Console.WriteLine(">> " + context.Request.Path + ": " + context.Response.StatusCode);
             }
         }
 

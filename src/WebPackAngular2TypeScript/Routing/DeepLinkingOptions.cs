@@ -5,7 +5,7 @@ namespace WebPackAngular2TypeScript.Routing
 {
     public class DeepLinkingOptions
     {
-        public PathString EntryPath { get; set; }
+        public PathString RelativeRedirectUrlPath { get; set; }
 
         public FileServerOptions FileServerOptions { get; set; }
     }

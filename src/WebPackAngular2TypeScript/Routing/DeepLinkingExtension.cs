@@ -17,18 +17,20 @@ namespace WebPackAngular2TypeScript.Routing
     {
         public static IApplicationBuilder UseDeepLinking(this IApplicationBuilder app,
             string baseFileSystemPath,
-            string rootPath, 
-            string entryPath)
+            string localFilesRelativePath,
+            string relativeRedirectUrl)
         {
+            string absoluteLookupRootPath = Path.Combine(baseFileSystemPath, localFilesRelativePath);
+
             var options = new DeepLinkingOptions()
             {
                 FileServerOptions = new FileServerOptions()
                 {
-                    FileProvider = new PhysicalFileProvider(Path.Combine(baseFileSystemPath, rootPath)),
+                    FileProvider = new PhysicalFileProvider(absoluteLookupRootPath),
                     EnableDirectoryBrowsing = false,
                 },
 
-                EntryPath = new PathString(entryPath),
+                RelativeRedirectUrlPath = new PathString(relativeRedirectUrl),
             };
 
             app.UseDefaultFiles(options.FileServerOptions.DefaultFilesOptions);
