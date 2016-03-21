@@ -18,24 +18,44 @@ namespace WebPackAngular2TypeScript.Routing
         public static IApplicationBuilder UseDeepLinking(this IApplicationBuilder app,
             string baseFileSystemPath,
             string localFilesRelativePath,
-            string relativeRedirectUrl)
+            string clientRedirectPath,
+            IEnumerable<string> clientRoutePaths = null)
         {
+            DeepLinkingOptions options;
+            Func<IApplicationBuilder> useMiddleware;
+
+            if (clientRoutePaths == null)
+            {
+                options = new DeepLinkingOptions();
+
+                useMiddleware = () => app.UseMiddleware<DeepLinkingMiddleware>(options);
+            }
+            else
+            {
+                PathString[] allowedRoutePaths = clientRoutePaths
+                    .Select(url => new PathString(url)).ToArray();
+
+                options = new DeepLinkingStrictOptions()
+                {
+                    AllowedRoutePaths = allowedRoutePaths,
+                };
+
+                useMiddleware = () => app.UseMiddleware<DeepLinkingStrictMiddleware>(options);
+            }
+
             string absoluteLookupRootPath = Path.Combine(baseFileSystemPath, localFilesRelativePath);
 
-            var options = new DeepLinkingOptions()
+            options.FileServerOptions = new FileServerOptions()
             {
-                FileServerOptions = new FileServerOptions()
-                {
-                    FileProvider = new PhysicalFileProvider(absoluteLookupRootPath),
-                    EnableDirectoryBrowsing = false,
-                },
-
-                RelativeRedirectUrlPath = new PathString(relativeRedirectUrl),
+                FileProvider = new PhysicalFileProvider(absoluteLookupRootPath),
+                EnableDirectoryBrowsing = false,
             };
+
+            options.RedirectUrlPath = new PathString(clientRedirectPath);
 
             app.UseDefaultFiles(options.FileServerOptions.DefaultFilesOptions);
 
-            return app.UseMiddleware<DeepLinkingMiddleware>(options);
+            return useMiddleware();
         }
     }
 }

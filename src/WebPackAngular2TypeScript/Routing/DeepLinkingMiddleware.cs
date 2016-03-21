@@ -29,17 +29,29 @@ namespace WebPackAngular2TypeScript.Routing
             // try to resolve the request with default static file middleware
             await staticFileMiddleware.Invoke(context);
 
-            // route to root path if the status code is 404
             if (context.Response.StatusCode == 404)
             {
-                context.Request.Path = options.RelativeRedirectUrlPath;
+                var redirectUrlPath = FindRedirection(context);
 
-                await staticFileMiddleware.Invoke(context);
+                if (redirectUrlPath != unresolvedPath)
+                {
+                    context.Request.Path = redirectUrlPath;
+
+                    await staticFileMiddleware.Invoke(context);
+                }
             }
         }
 
-        readonly DeepLinkingOptions options;
-        readonly RequestDelegate next;
-        readonly StaticFileMiddleware staticFileMiddleware;
+        protected virtual PathString FindRedirection(HttpContext context)
+        {
+            // route to root path when request was not resolved
+            return options.RedirectUrlPath;
+        }
+
+        protected readonly DeepLinkingOptions options;
+        protected readonly RequestDelegate next;
+        protected readonly StaticFileMiddleware staticFileMiddleware;
+
+        protected readonly PathString unresolvedPath = null;
     }
 }
