@@ -10,6 +10,8 @@ using Microsoft.AspNet.FileProviders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using System.IO;
+using WebPackAngular2TypeScript.Routing;
+using Microsoft.Extensions.Logging;
 
 namespace WebPackAngular2TypeScript
 {
@@ -23,16 +25,18 @@ namespace WebPackAngular2TypeScript
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IApplicationEnvironment appEnvironment)
+        public void Configure(IApplicationBuilder app, IApplicationEnvironment appEnv)
         {
             app.UseStaticFiles();
 
-            string clientBuildOutputPath = Path.Combine(appEnvironment.ApplicationBasePath, "buildOutput");
+            string clientBuildOutputPath = Path.Combine(appEnv.ApplicationBasePath, "buildOutput");
 
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(clientBuildOutputPath),
             });
+
+            app.UseDeepLinking(appEnv.ApplicationBasePath, "/", "/");
 
             app.UseMvc(config =>
             {
