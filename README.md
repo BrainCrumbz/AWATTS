@@ -57,3 +57,7 @@ to *Project and Solutions\External Web Tools*, and make sure to sort locations s
 Once project is opened in VS, thanks to NTVS, Visual Studio should right away suggest to update dependencies found
 in package.json. If that's not the case, you can fire off `install` task from Npm Task Runner Explorer, or run 
 `npm install` from console the old way (make sure to `cd` into web project root directory, first).
+
+## License
+
+See [LICENSE](LICENSE) in this project.
