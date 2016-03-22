@@ -1,13 +1,13 @@
 # AWATTS
 
-### Asp.Net Core, WebPack, Angular2, TypeScript Starter
+### Asp.Net Core, WebPack, Angular Two, TypeScript Starter
 
 ---
 
 A Visual Studio 2015 solution showing how to start up a project involving following technologies:
 
 * [Asp.Net Core](https://github.com/aspnet/Home) (formerly Asp.Net 5) to serve web pages, 
-* [Angular2](https://angular.io/) framework for client-side Single Page Application, 
+* [Angular 2](https://angular.io/) framework for client-side Single Page Application, 
 * [TypeScript](http://www.typescriptlang.org/) as an alternative to JavaScript to write client code,
 * [WebPack](https://webpack.github.io/) module bundler to process and build client source files, 
 * WebPack [Hot Module Replacement](https://webpack.github.io/docs/hot-module-replacement.html) to 
@@ -49,6 +49,8 @@ Client side application relies on JavaScript and TypeScript, but it needs node.j
 In order to let VS use current node.js version set by nvm (instead of its own version), go to *Tools\Options*, then
 to *Project and Solutions\External Web Tools*, and make sure to sort locations so that `$(PATH)` is **above** the two 
 `$(DevEnvDir)\...` locations.
+
+![VS Options for current node.js version](https://braincrumbz.github.io/AWATTS/assets/images/Options-ProjectsAndSolutions-ExternalWebTools.png)
 
 ## First time install
 
