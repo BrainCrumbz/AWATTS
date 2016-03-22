@@ -313,5 +313,11 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Others
+# =========================
+
 # WinMerge backups
 *.bak
+
+# local temp directory
+temp/**
