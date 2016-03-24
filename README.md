@@ -17,8 +17,9 @@ testing library to unit test client source code.
 
 ## Credits
 
-This project draws from the experience and hints given by other, earlier Angular 2 starter projects. 
-You might want to have a look at those, in case they might better suits your needs. Among the others: 
+For its client side, this project is based on our own Angular 2 starter project, [YANGTSE](https://github.com/BrainCrumbz/YANGTSE), 
+which in turn draws from the experience and hints given by other, earlier Angular 2 starter projects. 
+You might want to have a look at those, in case they might better suits your needs. Among the others, there are: 
 
 * [AngularClass/angular2-webpack-starter](https://github.com/AngularClass/angular2-webpack-starter)
 * [preboot/angular2-webpack](https://github.com/preboot/angular2-webpack)
@@ -66,6 +67,87 @@ to *Project and Solutions\External Web Tools*, and make sure to sort locations s
 Once project is opened in VS, thanks to NTVS, Visual Studio should right away suggest to update dependencies found
 in package.json. If that's not the case, you can fire off `install` task from Npm Task Runner Explorer, or run 
 `npm install` from console the old way (make sure to `cd` into web project root directory, first).
+
+## Available commands
+
+For its client side part, this project has a number of `npm`-based commands in order to build and process client 
+source code. You can run them from Npm Task Runner Explorer, or from console the old way.
+
+### Install
+
+Install all dependencies:
+
+~~~bash
+npm install
+~~~
+
+Uninstall all dependencies:
+
+~~~bash
+npm uninstall
+~~~
+
+### Build
+
+Build for development:
+
+~~~bash
+npm run build  # or npm run build-dev
+~~~
+
+Build for production:
+
+~~~bash
+npm run build-prod
+~~~
+
+Clean build output (not needed before build):
+
+~~~bash
+npm run clean
+~~~
+
+Clean build output and all dependencies:
+
+~~~bash
+npm run clean-deep
+~~~
+
+### Serve
+
+Serve front end in development, with hot module replacement and live reload 
+(it still needs Asp.Net server to be running):
+
+~~~bash
+npm start  # or npm run serve, or npm run serve-dev
+~~~
+
+Serve front end in production: no `npm` command needed, apart from building for production.
+Only Asp.Net server must be running.
+
+~~~bash
+npm run build-prod
+~~~
+
+### Test
+
+Test:
+
+~~~bash
+npm test  # or npm run test
+~~~
+
+Test with debugging enabled (e.g. breakpoints in browser console):
+
+~~~bash
+npm run test-debug
+~~~
+
+Test in watch mode (keep running tests again when code changes):
+
+~~~bash
+npm run test-watch
+~~~
 
 ## License
 
