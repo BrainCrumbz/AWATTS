@@ -126,7 +126,7 @@ Build for production:
 npm run build-prod
 ~~~
 
-Clean build output (not needed before build):
+Clean build output:
 
 ~~~bash
 npm run clean
@@ -137,6 +137,8 @@ Clean build output and all dependencies:
 ~~~bash
 npm run clean-deep
 ~~~
+
+Before building, output will be automatically cleaned. No need to manually clean.
 
 ### Serve
 
