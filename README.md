@@ -15,6 +15,15 @@ re-compile and reload web page when client source code changes,
 * [Karma](https://karma-runner.github.io) test runner and [Jasmine](http://jasmine.github.io/) BDD 
 testing library to unit test client source code.
 
+## Credits
+
+This project draws from the experience and hints given by other, earlier Angular 2 starter projects. 
+You might want to have a look at those, in case they might better suits your needs. Among the others: 
+
+* [AngularClass/angular2-webpack-starter](https://github.com/AngularClass/angular2-webpack-starter)
+* [preboot/angular2-webpack](https://github.com/preboot/angular2-webpack)
+* [wkwiatek/angular2-webpack2](https://github.com/wkwiatek/angular2-webpack2)
+
 ## Prerequisites
 
 Here are the tools that should be present in your development environment in order to work with this project:
@@ -60,4 +69,4 @@ in package.json. If that's not the case, you can fire off `install` task from Np
 
 ## License
 
-See [LICENSE](LICENSE) in this project.
+[MIT](LICENSE)
