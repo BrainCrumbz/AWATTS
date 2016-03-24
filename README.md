@@ -62,11 +62,36 @@ to *Project and Solutions\External Web Tools*, and make sure to sort locations s
 
 ![VS Options for current node.js version](https://braincrumbz.github.io/AWATTS/assets/images/Options-ProjectsAndSolutions-ExternalWebTools.png)
 
-## First time install
+## Quick start
 
-Once project is opened in VS, thanks to NTVS, Visual Studio should right away suggest to update dependencies found
-in package.json. If that's not the case, you can fire off `install` task from Npm Task Runner Explorer, or run 
-`npm install` from console the old way (make sure to `cd` into web project root directory, first).
+Clone or download this repository:
+
+~~~bash
+git clone --depth 1 https://github.com/BrainCrumbz/AWATTS.git
+cd AWATTS
+~~~
+
+Install dependencies:
+
+First time project is opened in VS, thanks to NTVS, Visual Studio should suggest you right away to update dependencies found. 
+If that's not the case, you can fire off `install` task from Npm Task Runner Explorer, or run 
+`npm install` in console the old way, from web project root directory:
+
+~~~bash
+cd src\WebPackAngular2TypeScript
+npm install
+~~~
+
+Enable client live reload and module replacement in development: 
+
+~~~bash
+npm start
+~~~
+
+Run server in development:
+
+Just start debugging web project in VS with F5. Browser will open on web app served *without* live reload. 
+Browse to `http://localhost:3000/` for web app served through live reload.
 
 ## Available commands
 
