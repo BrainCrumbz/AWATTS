@@ -17,9 +17,10 @@ var clientRoot = path.join(projectRoot, 'client');
 
 var paths = {
   clientRoot: clientRoot,
+  localDevRoot: 'buildOutput/',
+  buildOutput: path.join(projectRoot, 'buildOutput'),
   serverPaths: path.join(projectRoot, '(Controllers|Views)'),
   nodeModules: path.join(projectRoot, 'node_modules'),
-  buildOutput: path.join(projectRoot, 'buildOutput'),
   typings: path.join(projectRoot, 'typings'),
   coverage: path.join(projectRoot, 'coverage'),
   
