@@ -169,6 +169,6 @@ if (devMode == 'reload') {
 
   );
   
-}
+};
 
 module.exports = config;

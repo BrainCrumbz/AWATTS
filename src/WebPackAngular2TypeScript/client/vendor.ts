@@ -8,7 +8,7 @@ import 'es6-promise';
 
 // Angular 2 libs
 import 'reflect-metadata';
-import 'zone.js/dist/zone-microtask.min';
+import 'zone.js/dist/zone.min';
 
 // Angular 2 deps
 import 'rxjs';
