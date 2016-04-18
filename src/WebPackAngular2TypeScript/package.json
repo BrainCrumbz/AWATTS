@@ -5,22 +5,27 @@
   "main": "src/server/server.js",
   "scripts": {
     "clean": "rimraf ./buildOutput/*",
-    "clean-deep": "npm cache clean && rimraf ./node_modules ./typings ./buildOutput",
-    "install-typings": "typings install",
+      "clean-deep": "npm cache clean && rimraf ./node_modules ./typings ./buildOutput",
+    
     "postinstall": "npm run install-typings",
-    "prebuild-dev": "npm run clean",
-    "build-dev": "webpack --config ./webpack.config.dev.js --display-error-details --profile --colors",
-    "prebuild-prod": "npm run clean",
-    "build-prod": "webpack --config ./webpack.config.prod.js --display-error-details --profile --colors",
+      "install-typings": "typings install",
+      
     "build": "npm run build-dev",
-    "serve-dev": "set DEV_MODE=reload&&webpack-dev-server --config ./webpack.config.dev.js",
-    "preserve-prod": "npm run build-prod",
-    "serve-prod": "echo \"This is only to run preserve-prod command\" ",
-    "serve": "npm run serve-dev",
+      "build-dev": "webpack --config ./webpack.config.dev.js --display-error-details --profile --colors",
+        "prebuild-dev": "npm run clean",
+      "build-prod": "webpack --config ./webpack.config.prod.js --display-error-details --profile --colors",
+        "prebuild-prod": "npm run clean",
+        
     "start": "npm run serve",
+    
+    "serve": "npm run serve-dev",
+      "serve-dev": "set DEV_MODE=reload&&webpack-dev-server --config ./webpack.config.dev.js",
+      "serve-prod": "echo \"This is only to run preserve-prod command\" ",
+        "preserve-prod": "npm run build-prod",
+    
     "test": "karma start",
-    "test-debug": "set TEST_MODE=debug&&karma start",
-    "test-watch": "set TEST_MODE=watch&&karma start"
+      "test-debug": "set TEST_MODE=debug&&karma start",
+      "test-watch": "set TEST_MODE=watch&&karma start"
   },
   "keywords": [],
   "author": "",
