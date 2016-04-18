@@ -1,7 +1,7 @@
 {
-  "name": "ng2-cli-svr",
+  "name": "AWATTS-Client",
   "version": "0.1.0",
-  "description": "",
+  "description": "Asp.Net Core, WebPack, Angular Two, TypeScript Starter solution for Visual Studio 2015",
   "main": "src/server/server.js",
   "scripts": {
     "clean": "rimraf ./buildOutput/*",
@@ -27,8 +27,18 @@
       "test-debug": "set TEST_MODE=debug&&karma start",
       "test-watch": "set TEST_MODE=watch&&karma start"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "angular2",
+    "ng2",
+    "typescript",
+    "webpack",
+    "karma",
+    "jasmine",
+    "visualstudio",
+    "visual studio",
+    "aspnetcore"
+  ],
+  "author": "BrainCrumbz Team <team@braincrumbz.com> (http://www.braincrumbz.com/)",
   "license": "ISC",
   "repository": {
     "type": "git",
