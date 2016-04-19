@@ -3,11 +3,11 @@ import { Hero } from './hero';
 import { HEROES } from './mock-heroes';
 
 /* ERR-OBS to see errors, upgrade to rxjs@5.0.0-beta.3 and uncomment the following
+*/
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
-*/
 
 @Injectable()
 export class HeroService {
@@ -15,12 +15,13 @@ export class HeroService {
   constructor() {
 
     /* ERR-OBS to see errors, upgrade to rxjs@5.0.0-beta.3 and uncomment the following
+    */
 
     const numObs = Observable.of(1, 2, 3, 4);
 
     const textObs = numObs
       .map(n => 'Nr ' + n);
-    */
+
   }
 
   getHeroes() : Promise<Hero[]> {
