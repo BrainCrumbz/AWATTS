@@ -2,7 +2,7 @@
   "name": "AWATTS-Client",
   "version": "0.1.0",
   "description": "Asp.Net Core, WebPack, Angular Two, TypeScript Starter solution for Visual Studio 2015",
-  "main": "src/server/server.js",
+  "main": "",
   "scripts": {
     "clean": "rimraf ./buildOutput/*",
       "clean-deep": "npm cache clean && rimraf ./node_modules ./typings ./buildOutput",
@@ -39,7 +39,7 @@
     "aspnetcore"
   ],
   "author": "BrainCrumbz Team <team@braincrumbz.com> (http://www.braincrumbz.com/)",
-  "license": "ISC",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/BrainCrumbz/AWATTS.git"
