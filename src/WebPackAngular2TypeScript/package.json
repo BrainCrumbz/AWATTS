@@ -1,6 +1,6 @@
 {
   "name": "awatts-client",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Asp.Net Core, WebPack, Angular Two, TypeScript Starter solution for Visual Studio 2015",
   "main": "",
   "scripts": {
