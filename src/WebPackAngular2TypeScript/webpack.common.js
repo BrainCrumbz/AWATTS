@@ -153,9 +153,8 @@ var postLoaders = {
 
 var noParse = [
   /.+zone\.js\/dist\/.+/,
-  /angular2/,
+  /.+angular2\/bundles\/.+/,
   /angular2-polyfills\.js/,
-  /rxjs/,
 ];
 
 // resolve files using only those extensions
