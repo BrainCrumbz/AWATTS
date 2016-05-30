@@ -19,24 +19,24 @@ var config = {
   // Makes sure that breakpoints are hit, and variable values are shown
   // 'cheap-module-eval-source-map' is quicker, but breakpoints don't work
   devtool: 'source-map',
-  
+
   pathinfo: true,
-  
+
   // Switch loaders to debug mode
   debug: true,
-  
+
   // Set base directory for resolving entry points
   context: common.paths.clientRoot,
-  
+
   entry: {
-    
+
     'vendor': common.paths.vendorEntry,
-    
+
     // Client application main entry point
     'main': common.paths.mainEntry,
-    
+
   },
-  
+
   output: {
 
     // The output directory as absolute path (required), where build artifacts are saved
@@ -52,50 +52,50 @@ var config = {
     chunkFilename: common.files.chunk,
 
     publicPath: common.urls.public,
-    
+
   },
-  
+
   module: {
 
-    preLoaders: [ 
-      
-      common.preLoaders.tslint, 
-    
+    preLoaders: [
+
+      common.preLoaders.tslint,
+
     ],
 
     loaders: [
-      
+
       common.loaders.typescript,
       common.loaders.css,
       common.loaders.html,
-      
+
     ],
-    
+
     // speed up build by excluding some big libraries from parsing
     noParse: common.noParse,
-    
+
   },
-  
+
   resolve: {
-    
+
     extensions: common.resolvedExtensions,
-    
+
   },
 
   plugins: [
 
     new webpack.DefinePlugin(common.buildDefines()),
-    
+
     // Only emit files when there are no errors
     new webpack.NoErrorsPlugin(),
-    
+
     // Copy static assets from their folder to common output folder
-    new CopyWebpackPlugin([{ 
-      from: common.paths.staticFiles, 
+    new CopyWebpackPlugin([{
+      from: common.paths.staticFiles,
     }]),
-    
+
   ],
-  
+
 };
 
 // differences when reloading in development
@@ -128,21 +128,21 @@ if (devMode == 'reload') {
     common.paths.mainEntry,
 
   ];
-  
+
   // webpack dev server configuration
   config.devServer = {
 
     port: common.ports.reload,
 
     publicPath: common.urls.public,
-    
+
     contentBase: common.paths.localDevRoot,
-    
+
     proxy: {
       // proxied to backend web server
       '/*' : defaultServerUrl,
     },
-    
+
     // Enable Hot Module Replacement
     hot: true,
 
@@ -153,22 +153,22 @@ if (devMode == 'reload') {
     historyApiFallback: true,
 
     watchOptions: { aggregateTimeout: 300, poll: 1000 },
-    
+
     // The rest is terminal configuration
     console: true,
     quiet: false,
     noInfo: true,
     stats: { colors: true },
-    
+
   };
-  
+
   config.plugins.push(
 
     // We have to manually add the Hot Replacement plugin when running from Node
     new webpack.HotModuleReplacementPlugin()
 
   );
-  
+
 };
 
 module.exports = config;

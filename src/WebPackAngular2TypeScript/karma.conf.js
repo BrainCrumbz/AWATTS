@@ -11,20 +11,20 @@ if (! ['run-once', 'debug', 'watch'].includes(testMode))
 
 /*
  * When testing with webpack and transpiled JS, we have to do some extra
- * things to get testing to work right. Because we can only include JS 
- * tests in browser, we have to compile original tests as well. 
- * That's handled here in karma.conf.js with the karma-webpack preprocessor. 
- * Just like webpack will create JS bundle files for client code, when 
- * we running TS tests it will compile and bundle them all to JS as well. 
+ * things to get testing to work right. Because we can only include JS
+ * tests in browser, we have to compile original tests as well.
+ * That's handled here in karma.conf.js with the karma-webpack preprocessor.
+ * Just like webpack will create JS bundle files for client code, when
+ * we running TS tests it will compile and bundle them all to JS as well.
  */
 
 module.exports = function(config) {
-  
+
   var configOverride = {
-    
+
     // base path that will be used to resolve all patterns (e.g. files, exclude)
     basePath: '',
-    
+
     // files to exclude
     exclude: [
       common.paths.nodeModules, // skip all node modules
@@ -37,20 +37,20 @@ module.exports = function(config) {
     // with webpack plugin enabled, each file acts as entry point for webpack configuration
     files: [
       // required third-party modules
-      { pattern: 'node_modules/es6-shim/es6-shim.js', included: true, watched: false }, 
-      { pattern: 'node_modules/es6-promise/dist/es6-promise.js', included: true, watched: false }, 
-      { pattern: 'node_modules/reflect-metadata/Reflect.js', included: true, watched: false }, 
-      { pattern: 'node_modules/reflect-metadata/Reflect.js.map', included: false, watched: false }, 
-      { pattern: 'node_modules/zone.js/dist/zone-microtask.js', included: true, watched: false }, 
-      { pattern: 'node_modules/zone.js/dist/long-stack-trace-zone.js', included: true, watched: false }, 
+      { pattern: 'node_modules/es6-shim/es6-shim.js', included: true, watched: false },
+      { pattern: 'node_modules/es6-promise/dist/es6-promise.js', included: true, watched: false },
+      { pattern: 'node_modules/reflect-metadata/Reflect.js', included: true, watched: false },
+      { pattern: 'node_modules/reflect-metadata/Reflect.js.map', included: false, watched: false },
+      { pattern: 'node_modules/zone.js/dist/zone-microtask.js', included: true, watched: false },
+      { pattern: 'node_modules/zone.js/dist/long-stack-trace-zone.js', included: true, watched: false },
       { pattern: 'node_modules/rxjs/**', included: false, watched: false },
       { pattern: 'node_modules/angular2/**/*.js', included: false, watched: false },
       // shim entry point, to build test environment and run all spec files
-      { pattern: common.paths.testEntry, included: true, watched: false }, 
+      { pattern: common.paths.testEntry, included: true, watched: false },
       // the actual test spec, only to be monitored for re-runs
       { pattern: common.patterns.testSources, included: false, watched: true },
     ],
-    
+
     // explicitly list all Karma plugins to be loaded
     plugins: [
       'karma-phantomjs-launcher',
@@ -62,7 +62,7 @@ module.exports = function(config) {
       'karma-jasmine-html-reporter',
       'karma-coverage',
     ],
-    
+
     // preprocess matching files before serving them to the browser
     // by running them through this plugins
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
@@ -74,11 +74,11 @@ module.exports = function(config) {
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: [
       //'dots',
-      'progress', 
+      'progress',
       'mocha',
       'coverage',
     ],
-    
+
     coverageReporter: {
       dir: common.paths.coverage,
       reporters: [
@@ -104,7 +104,7 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    // if false, Karma will be listening on debug port in order to run the tests 
+    // if false, Karma will be listening on debug port in order to run the tests
     singleRun: true,
 
     // enable watching file and executing tests whenever any file changes
@@ -116,40 +116,40 @@ module.exports = function(config) {
     // logging level
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
-    
+
     // webpack config
     webpack: testWebpackConfig,
 
     // don't spam the console with webpack info when running tests
-    webpackServer: { 
-      noInfo: true, 
+    webpackServer: {
+      noInfo: true,
     },
 
   };
 
   // Preprocess matching files before serving them to the browser
   // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-  
+
   configOverride.preprocessors[common.paths.testEntry] = [
-    'webpack', // compile TS and ES6 files  
+    'webpack', // compile TS and ES6 files
     'sourcemap', // generate source maps
   ];
-  
+
   // differences when debugging while testing
   if (testMode == 'debug') {
-    
+
     configOverride.singleRun = false;
-    
+
     configOverride.webpack.module.postLoaders = configOverride.webpack.module.postLoaders.filter(notInstrumentPostLoader);
-    
+
     configOverride.browsers = [
       'Chrome',
     ];
-    
+
     configOverride.reporters = [
       'kjhtml',
     ];
-    
+
   }
 
   // differences when watching while testing
@@ -158,18 +158,18 @@ module.exports = function(config) {
     configOverride.singleRun = false;
 
     configOverride.autoWatch = true;
-    
+
     configOverride.webpack.module.postLoaders = configOverride.webpack.module.postLoaders.filter(notInstrumentPostLoader);
-    
+
     configOverride.reporters = configOverride.reporters.filter(reporter => reporter != 'coverage');
-    
+
   }
-    
-  config.set(configOverride); 
+
+  config.set(configOverride);
 };
 
 function notInstrumentPostLoader(postLoader) {
   var hasIstanbulLoader = postLoader.loaders.some(loader => loader == 'istanbul-instrumenter');
-  
+
   return ! hasIstanbulLoader;
 }
