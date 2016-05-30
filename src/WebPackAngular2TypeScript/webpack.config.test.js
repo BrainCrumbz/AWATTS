@@ -22,6 +22,9 @@ var config = {
     reasons: true,
   },
 
+  // TODO consider applying some null loaders for CSS in test
+  // (see https://angular.io/docs/ts/latest/guide/webpack.html)
+
   module: {
 
     preLoaders: [
@@ -33,7 +36,8 @@ var config = {
     loaders: [
 
       common.loaders.typescriptTest,
-      common.loaders.css,
+      common.loaders.componentCss,
+      common.loaders.globalCss,
       common.loaders.html,
 
     ],
@@ -48,6 +52,8 @@ var config = {
     noParse: common.noParse,
 
   },
+
+  postcss: common.postcss,
 
   resolve: {
 

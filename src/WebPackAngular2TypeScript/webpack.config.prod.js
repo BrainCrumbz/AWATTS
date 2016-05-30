@@ -46,7 +46,8 @@ var config = {
     loaders: [
 
       common.loaders.typescript,
-      common.loaders.css,
+      common.loaders.componentCss,
+      common.loaders.globalCss,
       common.loaders.html,
 
     ],
@@ -55,6 +56,8 @@ var config = {
     noParse: common.noParse,
 
   },
+
+  postcss: common.postcss,
 
   resolve: {
 
@@ -86,6 +89,7 @@ var config = {
       */
       mangle: false,
       compress: {
+        warnings: false,
         screw_ie8: true,
         drop_debugger: true,
         drop_console: true,
@@ -98,6 +102,7 @@ var config = {
       beautify: true,
       mangle: false,
       compress: {
+        warnings: true,
         screw_ie8: true,
         keep_fnames: true,
         drop_debugger: false,
