@@ -20,10 +20,11 @@ var config = {
   // 'cheap-module-eval-source-map' is quicker, but breakpoints don't work
   devtool: 'source-map',
 
-  pathinfo: true,
-
   // Switch loaders to debug mode
   debug: true,
+
+  // Cache generated modules and chunks to improve performance in incremental builds
+  cache: true,
 
   // Set base directory for resolving entry points
   context: common.paths.clientRoot,
@@ -52,6 +53,9 @@ var config = {
     chunkFilename: common.files.chunk,
 
     publicPath: common.urls.public,
+
+    // Include comments with information about the modules
+    pathinfo: true,
 
   },
 
@@ -88,6 +92,12 @@ var config = {
   plugins: [
 
     new webpack.DefinePlugin(common.buildDefines()),
+
+    new webpack.optimize.CommonsChunkPlugin({
+      name: ['main', 'vendor'],
+      filename: common.files.bundle,
+      minChunks: Infinity,
+    }),
 
     // Only emit files when there are no errors
     new webpack.NoErrorsPlugin(),

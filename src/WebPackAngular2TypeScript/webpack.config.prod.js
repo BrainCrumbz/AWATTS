@@ -70,8 +70,8 @@ var config = {
     new webpack.DefinePlugin(common.buildDefines()),
 
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: common.files.vendor,
+      name: ['main', 'vendor'],
+      filename: common.files.bundle,
       minChunks: Infinity,
     }),
 
