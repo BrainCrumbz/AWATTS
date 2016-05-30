@@ -1,0 +1,11 @@
+// Inserire le impostazioni in questo file per sovrascrivere quelle utente e predefinite.
+{
+
+    // Consente di configurare i criteri di ricerca GLOB per escludere file e cartelle.
+    "files.exclude": {
+        "**/node_modules/": true,
+        "**/typings/": true,
+        "**/buildOutput/": true
+    }
+
+}
