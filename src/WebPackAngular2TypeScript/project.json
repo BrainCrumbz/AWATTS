@@ -12,7 +12,9 @@
   },
 
   "commands": {
-    "web": "Microsoft.AspNet.Server.Kestrel"
+    "web": "Microsoft.AspNet.Server.Kestrel",
+    "web-dev": "Microsoft.AspNet.Server.Kestrel --config hosting.Development.json --Hosting:Environment Development",
+    "web-prod": "Microsoft.AspNet.Server.Kestrel --config hosting.Production.json --Hosting:Environment Production"
   },
 
   "frameworks": {
@@ -21,11 +23,16 @@
   },
 
   "exclude": [
-    "buildOutput",
+    "client",
     "wwwroot",
+    "buildOutput",
+    "typings",
     "node_modules"
   ],
   "publishExclude": [
+    "typings",
+    "node_modules",
+    "**.xproj",
     "**.user",
     "**.vspscc"
   ]
