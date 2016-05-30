@@ -1,5 +1,5 @@
-import { Component } from 'angular2/core';
-import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
+import { Component } from '@angular/core';
+import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import { HeroesComponent } from '../heroes/heroes.component';
 import { HeroDetailComponent } from '../heroes/hero-detail.component';
 import { HeroService } from '../heroes/hero.service';
@@ -22,7 +22,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
   providers: [
     ROUTER_PROVIDERS,
     HeroService,
-  ], 
+  ],
 })
 @RouteConfig([{
     path: '/dashboard',
@@ -39,7 +39,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
     component: HeroDetailComponent,
   }])
 export class AppComponent {
-  
+
   title = 'Tour of Heroes';
-  
+
 }

@@ -167,9 +167,7 @@ var postLoaders = {
 };
 
 var noParse = [
-  /.+zone\.js\/dist\/.+/,
-  /.+angular2\/bundles\/.+/,
-  /angular2-polyfills\.js/,
+  /.+zone\.js\/dist\/.+/
 ];
 
 var postcss = [

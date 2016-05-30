@@ -9,6 +9,8 @@ if (! ['run-once', 'debug', 'watch'].includes(testMode))
   testMode = 'run-once';
 }
 
+process.env.PHANTOMJS_BIN = 'node_modules/phantomjs-prebuilt/lib/phantom/bin/phantomjs.exe';
+
 /*
  * When testing with webpack and transpiled JS, we have to do some extra
  * things to get testing to work right. Because we can only include JS
@@ -36,15 +38,6 @@ module.exports = function(config) {
     // list of files/patterns to load in the browser, serve or watch. Order is important.
     // with webpack plugin enabled, each file acts as entry point for webpack configuration
     files: [
-      // required third-party modules
-      { pattern: 'node_modules/es6-shim/es6-shim.js', included: true, watched: false },
-      { pattern: 'node_modules/es6-promise/dist/es6-promise.js', included: true, watched: false },
-      { pattern: 'node_modules/reflect-metadata/Reflect.js', included: true, watched: false },
-      { pattern: 'node_modules/reflect-metadata/Reflect.js.map', included: false, watched: false },
-      { pattern: 'node_modules/zone.js/dist/zone-microtask.js', included: true, watched: false },
-      { pattern: 'node_modules/zone.js/dist/long-stack-trace-zone.js', included: true, watched: false },
-      { pattern: 'node_modules/rxjs/**', included: false, watched: false },
-      { pattern: 'node_modules/angular2/**/*.js', included: false, watched: false },
       // shim entry point, to build test environment and run all spec files
       { pattern: common.paths.testEntry, included: true, watched: false },
       // the actual test spec, only to be monitored for re-runs

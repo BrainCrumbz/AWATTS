@@ -1,5 +1,5 @@
-import { Component, OnInit } from 'angular2/core';
-import { Router } from 'angular2/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router-deprecated';
 import { Hero } from './hero';
 import { HeroService } from './hero.service';
 import { HeroDetailComponent } from './hero-detail.component';
@@ -11,28 +11,28 @@ import { HeroDetailComponent } from './hero-detail.component';
     directives: [HeroDetailComponent],
 })
 export class HeroesComponent implements OnInit {
-  
+
   constructor(
     private _router: Router,
     private _heroService: HeroService) { }
-    
+
   heroes: Hero[];
-  
+
   selectedHero: Hero;
 
   ngOnInit() {
     this.getHeroes();
   }
-  
+
   onSelect(hero: Hero) { this.selectedHero = hero; }
-  
+
   getHeroes() {
     this._heroService.getHeroes().then(heroes => this.heroes = heroes);
     //this._heroService.getHeroesSlowly().then(heroes => this.heroes = heroes);
   }
-  
+
   gotoDetail() {
     this._router.navigate(['HeroDetail', { id: this.selectedHero.id }]);
   }
-    
+
 }
