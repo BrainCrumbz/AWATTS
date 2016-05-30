@@ -25,7 +25,7 @@ var paths = {
   typings: path.join(projectRoot, 'typings'),
   coverage: path.join(projectRoot, 'coverage'),
 
-  mainEntry: path.join(clientRoot, 'bootstrap.ts'),
+  mainEntry: path.join(clientRoot, 'main.ts'),
   vendorEntry: path.join(clientRoot, 'vendor.ts'),
   testEntry: path.join(clientRoot, 'karma-entry.js'),
   staticFiles: path.join(clientRoot, 'static'),
