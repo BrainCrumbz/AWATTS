@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.FileProviders;
 using Microsoft.AspNet.Http;
-using Microsoft.AspNet.StaticFiles;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -11,45 +8,59 @@ namespace WebPackAngular2TypeScript.Routing
 {
     public static class DeepLinkingExtension
     {
-        public static IApplicationBuilder UseDeepLinking(this IApplicationBuilder app,
-            string baseFileSystemPath,
-            string localFilesRelativePath,
-            string clientRedirectPath,
-            IEnumerable<string> clientRoutePaths = null)
+        public static IApplicationBuilder UseDeepLinking(this IApplicationBuilder app, DeepLinkingOptions options)
         {
-            bool usingStrict = (clientRoutePaths != null);
+            if (app == null)
+            {
+                throw new ArgumentNullException(nameof(app), "Passed application builder cannot be null");
+            }
 
-            DeepLinkingOptions options;
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options), "Passed options cannot be null");
+            }
+
+            string absolutePhysicalRootPath = Path.Combine(options.BaseFileSystemPath, options.LocalFilesRelativePath);
+
+            var redirectUrlPath = new PathString(options.ClientRedirectPath);
+
+            var allowedClientPaths = options.AllowedClientPaths ?? new string[0];
+
+            bool usingStrict = allowedClientPaths.Any();
+
+            var ignoredClientPaths = options.IgnoredClientPaths ?? new string[0];
+
+            PathString[] ignoredPathStrings = ignoredClientPaths
+                .Select(url => new PathString(url)).ToArray();
+
             Func<IApplicationBuilder> useMiddleware;
 
             if (!usingStrict)
             {
-                options = new DeepLinkingOptions();
+                var middlewareOptions = new DeepLinkingMiddlewareOptions()
+                {
+                    AbsolutePhysicalRootPath = absolutePhysicalRootPath,
+                    RedirectUrlPath = redirectUrlPath,
+                    IgnoredRoutePaths = ignoredPathStrings,
+                };
 
-                useMiddleware = () => app.UseMiddleware<DeepLinkingMiddleware>(options);
+                useMiddleware = () => app.UseMiddleware<DeepLinkingMiddleware>(middlewareOptions);
             }
             else
             {
-                PathString[] allowedRoutePaths = clientRoutePaths
+                PathString[] allowedPathStrings = allowedClientPaths
                     .Select(url => new PathString(url)).ToArray();
 
-                options = new DeepLinkingStrictOptions()
+                var strictMiddlewareOptions = new DeepLinkingStrictMiddlewareOptions()
                 {
-                    AllowedRoutePaths = allowedRoutePaths,
+                    AbsolutePhysicalRootPath = absolutePhysicalRootPath,
+                    RedirectUrlPath = redirectUrlPath,
+                    AllowedRoutePaths = allowedPathStrings,
+                    IgnoredRoutePaths = ignoredPathStrings,
                 };
 
-                useMiddleware = () => app.UseMiddleware<DeepLinkingStrictMiddleware>(options);
+                useMiddleware = () => app.UseMiddleware<DeepLinkingStrictMiddleware>(strictMiddlewareOptions);
             }
-
-            string absoluteLookupRootPath = Path.Combine(baseFileSystemPath, localFilesRelativePath);
-
-            options.FileServerOptions = new FileServerOptions()
-            {
-                FileProvider = new PhysicalFileProvider(absoluteLookupRootPath),
-                EnableDirectoryBrowsing = false,
-            };
-
-            options.RedirectUrlPath = new PathString(clientRedirectPath);
 
             return useMiddleware();
         }

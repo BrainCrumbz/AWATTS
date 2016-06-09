@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WebPackAngular2TypeScript.Routing
 {
-    public class DeepLinkingStrictOptions : DeepLinkingOptions
+    public class DeepLinkingStrictMiddlewareOptions : DeepLinkingMiddlewareOptions
     {
         public IEnumerable<PathString> AllowedRoutePaths { get; set; }
     }

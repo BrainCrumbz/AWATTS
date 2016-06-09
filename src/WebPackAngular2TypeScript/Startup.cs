@@ -30,15 +30,24 @@ namespace WebPackAngular2TypeScript
                 FileProvider = new PhysicalFileProvider(clientBuildOutputPath),
             });
 
-            app.UseDeepLinking(
-                baseFileSystemPath: appEnv.ApplicationBasePath,
-                localFilesRelativePath: "/", 
-                clientRedirectPath: "/", 
-                clientRoutePaths: new string[]
+            app.UseDeepLinking(new DeepLinkingOptions()
+            {
+                BaseFileSystemPath = appEnv.ApplicationBasePath,
+                LocalFilesRelativePath = "/",
+                ClientRedirectPath = "/",
+                IgnoredClientPaths = new string[]
+                {
+                    "/api",
+                },
+            });
+            // NOTE: in order to switch to strict deep linking, pass the following option too:
+            /*
+                AllowedClientPaths: new string[]
                 {
                     "/dashboard",
                     "/heroes",
                 });
+            */
 
             app.UseMvc(config =>
             {

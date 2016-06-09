@@ -11,13 +11,13 @@ namespace WebPackAngular2TypeScript.Routing
         public DeepLinkingStrictMiddleware(RequestDelegate next,
             IHostingEnvironment hostingEnv,
             ILoggerFactory loggerFactory,
-            DeepLinkingStrictOptions strictOptions)
+            DeepLinkingStrictMiddlewareOptions strictOptions)
             : base(next, hostingEnv, loggerFactory, strictOptions)
         {
             this.strictOptions = strictOptions;
         }
 
-        protected override PathString FindRedirection(HttpContext context)
+        protected override PathString TryResolveRedirect(HttpContext context)
         {
             // route to root path when request was not resolved
             // and it belongs to allowed client routes
@@ -29,16 +29,14 @@ namespace WebPackAngular2TypeScript.Routing
 
             if (requestIsAllowed)
             {
-                return base.FindRedirection(context);
+                return base.TryResolveRedirect(context);
             }
             else
             {
-                // do *NOT* invoke base implementation
-
                 return unresolvedPath;
             }
         }
 
-        readonly DeepLinkingStrictOptions strictOptions;
+        readonly DeepLinkingStrictMiddlewareOptions strictOptions;
     }
 }

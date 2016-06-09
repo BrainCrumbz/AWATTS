@@ -1,12 +1,17 @@
-﻿using Microsoft.AspNet.Http;
-using Microsoft.AspNet.StaticFiles;
+﻿using System.Collections.Generic;
 
 namespace WebPackAngular2TypeScript.Routing
 {
     public class DeepLinkingOptions
     {
-        public PathString RedirectUrlPath { get; set; }
+        public string BaseFileSystemPath { get; set; }
 
-        public FileServerOptions FileServerOptions { get; set; }
+        public string LocalFilesRelativePath { get; set; }
+
+        public string ClientRedirectPath { get; set; }
+
+        public IEnumerable<string> AllowedClientPaths { get; set; }
+
+        public IEnumerable<string> IgnoredClientPaths { get; set; }
     }
 }
