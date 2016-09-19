@@ -27,7 +27,7 @@ var config = {
   cache: true,
 
   // Set base directory for resolving entry points
-  context: common.paths.clientRoot,
+  context: common.paths.clientSrc,
 
   entry: {
 

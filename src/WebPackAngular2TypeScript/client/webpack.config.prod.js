@@ -13,7 +13,7 @@ var config = {
   debug: false,
 
   // Set base directory for resolving entry points
-  context: common.paths.clientRoot,
+  context: common.paths.clientSrc,
 
   // Client application only, no dev server
   entry: {

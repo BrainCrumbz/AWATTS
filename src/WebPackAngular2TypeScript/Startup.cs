@@ -23,7 +23,7 @@ namespace WebPackAngular2TypeScript
         {
             app.UseStaticFiles();
 
-            string clientBuildOutputPath = Path.Combine(appEnv.ApplicationBasePath, "buildOutput");
+            string clientBuildOutputPath = Path.Combine(appEnv.ApplicationBasePath, "client\buildOutput");
 
             app.UseStaticFiles(new StaticFileOptions()
             {

@@ -12,23 +12,22 @@ var urls = {
   public: '/',
 };
 
-var projectRoot = path.resolve(__dirname);
+var clientRoot = path.resolve(__dirname);
 
-var clientRoot = path.join(projectRoot, 'client');
+var clientSrc = path.join(clientRoot, 'src');
 
 var paths = {
-  clientRoot: clientRoot,
+  clientSrc: clientSrc,
   localDevRoot: 'buildOutput/',
-  buildOutput: path.join(projectRoot, 'buildOutput'),
-  serverPaths: path.join(projectRoot, '(Controllers|Views)'),
-  nodeModules: path.join(projectRoot, 'node_modules'),
-  typings: path.join(projectRoot, 'typings'),
-  coverage: path.join(projectRoot, 'coverage'),
+  buildOutput: path.join(clientRoot, 'buildOutput'),
+  nodeModules: path.join(clientRoot, 'node_modules'),
+  typings: path.join(clientRoot, 'typings'),
+  coverage: path.join(clientRoot, 'coverage'),
 
-  mainEntry: path.join(clientRoot, 'main.ts'),
-  vendorEntry: path.join(clientRoot, 'vendor.ts'),
-  testEntry: path.join(clientRoot, 'karma-entry.js'),
-  staticFiles: path.join(clientRoot, 'static'),
+  mainEntry: path.join(clientSrc, 'main.browser.ts'),
+  vendorEntry: path.join(clientSrc, 'vendor.ts'),
+  testEntry: path.join(clientSrc, 'karma-entry.js'),
+  staticFiles: path.join(clientSrc, 'static'),
 };
 
 var files = {
@@ -42,22 +41,21 @@ var files = {
 };
 
 var patterns = {
-  testSources: path.join(paths.clientRoot, '**/*.spec.ts'),
+  testSources: path.join(paths.clientSrc, '**/*.spec.ts'),
 };
 
 var preLoaders = {
 
   tslint: {
     test: /\.ts$/,
-    loaders: ['tslint'],
+    loaders: ['tslint-loader'],
     include: [
-      paths.clientRoot,
+      paths.clientSrc,
     ],
     exclude: [
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
       paths.buildOutput, // skip output
-      paths.serverPaths, // skip server
     ],
   },
 
@@ -68,30 +66,28 @@ var loaders = {
   // all files with a `.ts` extension will be handled by `ts-loader`
   typescript: {
     test: /\.ts$/,
-    loaders: ['ts'],
+    loaders: ['ts-loader'],
     include: [
-      paths.clientRoot,
+      paths.clientSrc,
     ],
     exclude: [
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
       paths.buildOutput, // skip output
-      paths.serverPaths, // skip server
       /\.(spec|e2e|async)\.ts$/, // skip all test and async TS files
     ],
   },
 
   typescriptTest: {
     test: /\.ts$/,
-    loaders: ['ts'],
+    loaders: ['ts-loader'],
     include: [
-      paths.clientRoot,
+      paths.clientSrc,
     ],
     exclude: [
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
       paths.buildOutput, // skip output
-      paths.serverPaths, // skip server
       /\.(e2e|async)\.ts$/, // skip end-to-end test and async TS files
     ],
   },
@@ -100,15 +96,14 @@ var loaders = {
   // NOTE: this assumes that their filename ends in '.component.css'
   componentCss: {
     test: /\.component\.css$/,
-    loaders: ['raw', 'postcss'],
+    loaders: ['raw-loader', 'postcss-loader'],
     include: [
-      paths.clientRoot,
+      paths.clientSrc,
     ],
     exclude: [
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
       paths.buildOutput, // skip output
-      paths.serverPaths, // skip server
     ],
   },
 
@@ -116,30 +111,28 @@ var loaders = {
   // NOTE: this assumes that their filename don't contain `component`
   globalCss: {
     test: /^(?!.*component).*\.css$/,
-    loaders: ['style', 'css?sourceMap', 'postcss?sourceMap'],
+    loaders: ['style-loader', 'css-loader?sourceMap', 'postcss-loader?sourceMap'],
     include: [
-      paths.clientRoot,
+      paths.clientSrc,
       paths.nodeModules, // allow to import CSS from third-party libraries
     ],
     exclude: [
       paths.typings, // skip all type definitions
       paths.buildOutput, // skip output
-      paths.serverPaths, // skip server
     ],
   },
 
   // support for requiring HTML as raw text
   html: {
     test: /\.html$/,
-    loaders: ['raw'],
+    loaders: ['raw-loader'],
     include: [
-      paths.clientRoot,
+      paths.clientSrc,
     ],
     exclude: [
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
       paths.buildOutput, // skip output
-      paths.serverPaths, // skip server
     ],
   },
 
@@ -151,16 +144,15 @@ var postLoaders = {
   // delay coverage until after tests are run, fixing transpiled source coverage error
   istanbul: {
     test: /\.(js|ts)$/,
-    loaders: ['istanbul-instrumenter'],
+    loaders: ['istanbul-instrumenter-loader'],
     include: [
-      paths.clientRoot,
+      paths.clientSrc,
     ],
     exclude: [
       /\.(e2e|spec)\.ts$/, // skip all test files
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
       paths.buildOutput, // skip output
-      paths.serverPaths, // skip server
     ],
   },
 
@@ -179,7 +171,7 @@ var postcss = [
 ];
 
 // resolve files using only those extensions
-var resolvedExtensions = ['', '.ts', '.js', '.css', '.html'];
+var resolvedExtensions = ['', '.ts', '.js'];
 
 function buildDefines() {
   var packageDef = require('./package.json');
