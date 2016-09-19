@@ -46,6 +46,7 @@ var config = {
     loaders: [
 
       common.loaders.typescript,
+      common.loaders.componentSass,
       common.loaders.componentCss,
       common.loaders.globalCss,
       common.loaders.html,

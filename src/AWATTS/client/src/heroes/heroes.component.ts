@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router-deprecated';
+import { Router } from '@angular/router';
+
 import { Hero } from './hero';
 import { HeroService } from './hero.service';
-import { HeroDetailComponent } from './hero-detail.component';
 
 @Component({
     selector: 'my-heroes',
-    template: require('./heroes.component.html'),
-    styles: [require('./heroes.component.css')],
-    directives: [HeroDetailComponent],
+    templateUrl: './heroes.component.html',
+    styleUrls: ['./heroes.component.css'],
 })
 export class HeroesComponent implements OnInit {
 
@@ -32,7 +31,8 @@ export class HeroesComponent implements OnInit {
   }
 
   gotoDetail() {
-    this._router.navigate(['HeroDetail', { id: this.selectedHero.id }]);
+    const link = ['/detail', this.selectedHero.id];
+    this._router.navigate(link);
   }
 
 }

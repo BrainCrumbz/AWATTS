@@ -1,24 +1,25 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { RouteParams } from '@angular/router-deprecated';
+import { ActivatedRoute, Params } from '@angular/router';
+
 import { HeroService } from './hero.service';
 import { Hero } from './hero';
 
 @Component({
   selector: 'my-hero-detail',
-  template: require('./hero-detail.component.html'),
-  styles: [require('./hero-detail.component.css')],
+  templateUrl: './hero-detail.component.html',
+  styleUrls: ['./hero-detail.component.css'],
 })
 export class HeroDetailComponent implements OnInit {
 
   constructor(
     private _heroService: HeroService,
-    private _routeParams: RouteParams) {
+    private _route: ActivatedRoute) {
   }
 
   @Input() hero: Hero;
 
   ngOnInit() {
-    let id = +this._routeParams.get('id');
+    let id = +this._route.snapshot.params['id'];
 
     this._heroService.getHero(id)
       .then(hero => this.hero = hero);

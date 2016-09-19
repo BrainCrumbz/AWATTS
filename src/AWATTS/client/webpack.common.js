@@ -59,14 +59,28 @@ var preLoaders = {
     ],
   },
 
+  // Source map loader support for *.js files
+  // Extracts SourceMaps for source files that are added as sourceMappingURL comment.
+  javascriptTest: {
+    test: /\.js$/,
+    loaders: ['source-map-loader'],
+    exclude: [
+      // these packages have problems with their sourcemaps
+      path.join(paths.nodeModules, '@angular'),
+      path.join(paths.nodeModules, 'rxjs'),
+    ]
+  },
+
 }
 
 var loaders = {
 
   // all files with a `.ts` extension will be handled by `ts-loader`
+  // chained to `angular2-template-loader` so to convert template/style URLs into inlined template/styles
+  // Chaining requires 'useWebpackText' attribute for 'awesomeTypescriptLoaderOptions' in tsconfig.json
   typescript: {
     test: /\.ts$/,
-    loaders: ['ts-loader'],
+    loaders: ['awesome-typescript-loader', 'angular2-template-loader'],
     include: [
       paths.clientSrc,
     ],
@@ -80,7 +94,7 @@ var loaders = {
 
   typescriptTest: {
     test: /\.ts$/,
-    loaders: ['ts-loader'],
+    loaders: ['awesome-typescript-loader', 'angular2-template-loader'],
     include: [
       paths.clientSrc,
     ],
@@ -97,6 +111,21 @@ var loaders = {
   componentCss: {
     test: /\.component\.css$/,
     loaders: ['raw-loader', 'postcss-loader'],
+    include: [
+      paths.clientSrc,
+    ],
+    exclude: [
+      paths.nodeModules, // skip all node modules
+      paths.typings, // skip all type definitions
+      paths.buildOutput, // skip output
+    ],
+  },
+
+  // support for requiring component-scoped Sass as raw text
+  // NOTE: this assumes that their filename ends in 'component.scss'
+  componentSass: {
+    test: [/component\.scss$/, /color-picker\.scss$/],
+    loaders: ['raw-loader', 'postcss-loader', 'sass-loader'],
     include: [
       paths.clientSrc,
     ],
@@ -159,7 +188,7 @@ var postLoaders = {
 };
 
 var noParse = [
-  /.+zone\.js\/dist\/.+/
+  /.+zone\.js\/dist\/.+/,
 ];
 
 var postcss = [
@@ -192,6 +221,7 @@ var common = {
   loaders: loaders,
   postLoaders: postLoaders,
   noParse: noParse,
+  postcss: postcss,
   resolvedExtensions: resolvedExtensions,
   buildDefines: buildDefines,
 };

@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router-deprecated';
+import { Router } from '@angular/router';
+
 import { Hero } from '../heroes/hero';
 import { HeroService } from '../heroes/hero.service';
 
 @Component({
   selector: 'my-dashboard',
-  template: require('./dashboard.component.html'),
-  styles: [require('./dashboard.component.css')],
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
 
@@ -23,7 +24,7 @@ export class DashboardComponent implements OnInit {
   }
 
   gotoDetail(hero: Hero) {
-    let link = ['HeroDetail', { id: hero.id }];
+    const link = ['/detail', hero.id];
     this._router.navigate(link);
   }
 

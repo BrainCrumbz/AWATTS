@@ -22,6 +22,8 @@ var config = {
     reasons: true,
   },
 
+  cache: false,
+
   // TODO consider applying some null loaders for CSS in test
   // (see https://angular.io/docs/ts/latest/guide/webpack.html)
 
@@ -30,12 +32,14 @@ var config = {
     preLoaders: [
 
       common.preLoaders.tslint,
+      common.preLoaders.javascriptTest,
 
     ],
 
     loaders: [
 
       common.loaders.typescriptTest,
+      common.loaders.componentSass,
       common.loaders.componentCss,
       common.loaders.globalCss,
       common.loaders.html,

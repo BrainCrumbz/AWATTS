@@ -1,6 +1,7 @@
 var url = require('url');
 var webpack = require('webpack');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 var common = require('./webpack.common.js');
 
 // ensure development environment
@@ -70,6 +71,7 @@ var config = {
     loaders: [
 
       common.loaders.typescript,
+      common.loaders.componentSass,
       common.loaders.componentCss,
       common.loaders.globalCss,
       common.loaders.html,
@@ -92,6 +94,9 @@ var config = {
   plugins: [
 
     new webpack.DefinePlugin(common.buildDefines()),
+
+    // Allow setting option in tsconfig, so that type checking happens in a separate process and webpack doesn't have to wait
+    new ForkCheckerPlugin(),
 
     new webpack.optimize.CommonsChunkPlugin({
       name: ['main', 'vendor'],

@@ -40,7 +40,7 @@ module.exports = function(config) {
       // shim entry point, to build test environment and run all spec files
       { pattern: common.paths.testEntry, included: true, watched: false },
       // the actual test spec, only to be monitored for re-runs
-      { pattern: common.patterns.testSources, included: false, watched: true },
+      ////{ pattern: common.patterns.testSources, included: false, watched: true },
     ],
 
     // explicitly list all Karma plugins to be loaded
@@ -71,10 +71,16 @@ module.exports = function(config) {
       'coverage',
     ],
 
+    mochaReporter: {
+      maxLogLines: 5,
+    },
+
     coverageReporter: {
       dir: common.paths.coverage,
       reporters: [
         { type: 'text-summary' },  // log a tabled summary to console
+        // Add JSON output to enable webpack-bundle-size-analyzer
+        //{ type: 'json' },  // produce a JSON document
         { type: 'html' },  // produce a HTML document
       ],
     },
@@ -120,12 +126,19 @@ module.exports = function(config) {
   };
 
   // Preprocess matching files before serving them to the browser
-  // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
 
+  // compile test files and generate maps
   configOverride.preprocessors[common.paths.testEntry] = [
     'webpack', // compile TS and ES6 files
     'sourcemap', // generate source maps
   ];
+
+  // TODO find a way to apply it only to files mentioned below
+  /*
+  configOverride.preprocessors[... all app source code, tests and libraries excluded ...] = [
+    'coverage',
+  ];
+  */
 
   // differences when debugging while testing
   if (testMode == 'debug') {

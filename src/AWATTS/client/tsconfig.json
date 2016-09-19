@@ -15,6 +15,10 @@
     "node_modules",
     "typings/index.d.ts"
   ],
+  "awesomeTypescriptLoaderOptions": {
+    "forkChecker": true,
+    "useWebpackText": true
+  },
   "compileOnSave": false,
   "buildOnSave": false
 }

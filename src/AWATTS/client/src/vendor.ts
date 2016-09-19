@@ -9,12 +9,14 @@ import 'zone.js/dist/zone.min';
 
 // Angular 2
 // import Angular 2 here, so to have it as common dependencies in vendor bundle
+import '@angular/common';
+import '@angular/compiler';
+import '@angular/core';
+import '@angular/forms';
+import '@angular/http';
 import '@angular/platform-browser';
 import '@angular/platform-browser-dynamic';
-import '@angular/core';
-import '@angular/common';
-import '@angular/http';
-import '@angular/router-deprecated';
+import '@angular/router';
 
 // RxJS
 // avoid importing the whole RxJS library here. Although more tedious, look for all
