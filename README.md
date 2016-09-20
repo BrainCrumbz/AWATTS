@@ -6,7 +6,7 @@
 
 A Visual Studio 2015 solution showing how to start up a project involving following technologies:
 
-* [Asp.Net Core](https://github.com/aspnet/Home) (formerly Asp.Net 5) to serve web pages,
+* [ASP.NET Core](https://github.com/aspnet/Home) (formerly ASP.NET 5) to serve web pages,
 * [Angular 2](https://angular.io/) framework for client-side Single Page Application,
 * [TypeScript](http://www.typescriptlang.org/) as an alternative to JavaScript to write client code,
 * [WebPack](https://webpack.github.io/) module bundler to process and build client source files,
@@ -33,29 +33,25 @@ Here are the tools that should be present in your development environment in ord
 
 * Visual Studio 2015 Community Edition
 * Microsoft ASP.NET and Web Tools. It should already be installed with VS2015, but make sure to update it to latest version
-* Node.js Tools for Visual Studio (NTVS). It should already be installed with VS2015
-* [Npm Task Runner](https://github.com/madskristensen/NpmTaskRunner), an extension for VS Task Runner Explorer
-to run npm scripts from Visual Studio, by Mads Kristensen
 
 ### .NET environment
 
 Server side application relies on .NET:
 
-* .NET Version Manager command line tool (DNVM). It should already be installed with VS2015
-* .NET 1.0.0-rc1-update1 CLR execution environment, the full .NET framework for ASP.NET Core projects
-* .NET 1.0.0-rc1-update1 Core CLR execution environment, just the Core .NET framework for ASP.NET Core projects
+* [.NET Core 1.0.1 SDK](https://www.microsoft.com/net/core) and .NET Core VS 2015 Tooling Preview 2
 
-At current time of writing, ASP.NET 5 is still in the process of being renamed as ASP.NET Core 1, and RC1 is already out.
-Things like version, install procedure, tool naming might still change in the next future.
+Please note that, at current time of writing, .NET Core tooling is still in preview. Things like version, install procedure, naming 
+might still change in the next future.
 
 ### node.js environment
 
 Client side application relies on JavaScript and TypeScript, but it needs node.js to be built and processed.
 
-* [nvm-windows](https://github.com/coreybutler/nvm-windows) 1.1.0, a node.js version management utility for Windows by Corey Butler
-* node.js 4.3.2
-* npm 3.8.0
+* [nvm-windows](https://github.com/coreybutler/nvm-windows) 1.1.0 or later, a node.js version management utility for Windows by Corey Butler
+* node.js 4.3.2 or later
+* npm 3.8.0 or later
 
+You can run node.js commands from console the classic way or from within VS through Npm Task Runner Explorer, an optional Visual Studio extension.
 In order to let VS use current node.js version set by nvm (instead of its own version), go to *Tools\Options*, then
 to *Project and Solutions\External Web Tools*, and make sure to sort locations so that `$(PATH)` is **above** the two
 `$(DevEnvDir)\...` locations.
@@ -73,9 +69,8 @@ cd AWATTS
 
 Install dependencies:
 
-First time project is opened in VS, thanks to NTVS, Visual Studio should suggest you right away to update dependencies found.
-If that's not the case, you can fire off `install` task from Npm Task Runner Explorer, or run
-`npm install` in console the old way, from web project root directory:
+First time project is opened, you should install found client-side dependencies.
+You can fire off `install` task from Npm Task Runner Explorer, or run `npm install` in console the old way, from web project root directory:
 
 ~~~bash
 cd src\WebPackAngular2TypeScript
@@ -96,7 +91,7 @@ Browse to `http://localhost:3000/` for web app served through live reload.
 ## Available commands
 
 For its client side part, this project has a number of `npm`-based commands in order to build and process client
-source code. You can run them from Npm Task Runner Explorer, or from console the old way.
+source code. You can run them from console the classic way or from Npm Task Runner Explorer.
 
 ### Install
 
@@ -143,14 +138,14 @@ Before building, output will be automatically cleaned. No need to manually clean
 ### Serve
 
 Serve front end in development, with hot module replacement and live reload
-(it still needs Asp.Net server to be running):
+(it still needs ASP.NET server to be running):
 
 ~~~bash
 npm start  # or npm run serve, or npm run serve-dev
 ~~~
 
 Serve front end in production: no `npm` command needed, apart from building for production.
-Only Asp.Net server must be running.
+Only ASP.NET server must be running.
 
 ~~~bash
 npm run build-prod
