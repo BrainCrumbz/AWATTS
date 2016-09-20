@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.1.0-*",
+  "version": "1.2.0-*",
 
   "dependencies": {
     "Microsoft.NETCore.App": {
@@ -71,7 +71,6 @@
   },
 
   "scripts": {
-    "prepublish": [ "npm --prefix ./client install ./client", "dotnet bundle" ],
     "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   }
 }
