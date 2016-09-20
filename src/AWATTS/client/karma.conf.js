@@ -133,12 +133,10 @@ module.exports = function(config) {
     'sourcemap', // generate source maps
   ];
 
-  // TODO find a way to apply it only to files mentioned below
-  /*
-  configOverride.preprocessors[... all app source code, tests and libraries excluded ...] = [
+  // calculate coverage only on actual application files, excluding tests and libraries
+  configOverride.preprocessors[common.patterns.appSources] = [
     'coverage',
   ];
-  */
 
   // differences when debugging while testing
   if (testMode == 'debug') {
