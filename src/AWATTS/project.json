@@ -71,6 +71,7 @@
   },
 
   "scripts": {
+    "prepublish": [ "cd ./client && npm install", "cd ./client && npm run build-prod" ],
     "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   }
 }
