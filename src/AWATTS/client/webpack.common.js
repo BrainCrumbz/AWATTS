@@ -78,7 +78,7 @@ var loaders = {
 
   },
 
-  // all files with a `.ts` extension will be handled by `ts-loader`
+  // all files with a `.ts` extension will be handled by `awesome-typescript-loader`
   // chained to `angular2-template-loader` so to convert template/style URLs into inlined template/styles
   // Chaining requires 'useWebpackText' attribute for 'awesomeTypescriptLoaderOptions' in tsconfig.json
   typescript: {
@@ -128,9 +128,9 @@ var loaders = {
   },
 
   // support for requiring component-scoped CSS as raw text
-  // NOTE: this assumes that their filename ends in '.component.css'
+  // NOTE: this assumes that their filename ends in 'component.css'
   componentCss: {
-    test: /\.component\.css$/,
+    test: /component\.css$/,
     loaders: ['raw-loader', 'postcss-loader'],
     include: [
       paths.clientSrc,
@@ -160,10 +160,22 @@ var loaders = {
   },
 
   // support for requiring global, crosswide CSS as <style> tag
-  // NOTE: this assumes that their filename don't contain `component`
+  // NOTE: this assumes that their filename doesn't contain `component`
   globalCss: {
     test: /^(?!.*component).*\.css$/,
-    loaders: ['style-loader', 'css-loader?sourceMap', 'postcss-loader?sourceMap'],
+    loaders: [{
+      loader: 'style-loader',
+    },{
+      loader: 'css-loader',
+      options: {
+        sourceMap: true,
+      },
+    }, {
+      loader: 'postcss-loader',
+      options: {
+        sourceMap: true,
+      },
+    }],
     include: [
       paths.clientSrc,
       paths.nodeModules, // allow to import CSS from third-party libraries
