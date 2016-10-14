@@ -1,1 +1,5 @@
 /* global styles common to all app modules */
+
+body {
+  background-color: lightgoldenrodyellow;
+}
