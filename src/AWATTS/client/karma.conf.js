@@ -1,5 +1,6 @@
-var common = require('./webpack.common.js');
 var testWebpackConfig = require('./webpack.config.test.js');
+var buildCommon = require('./webpack.common.js');
+var common = buildCommon();
 
 // detect testing mode from environment
 var testMode = process.env.TEST_MODE;
@@ -143,8 +144,6 @@ module.exports = function(config) {
 
     configOverride.singleRun = false;
 
-    configOverride.webpack.module.postLoaders = configOverride.webpack.module.postLoaders.filter(notInstrumentPostLoader);
-
     configOverride.browsers = [
       'Chrome',
     ];
@@ -162,17 +161,9 @@ module.exports = function(config) {
 
     configOverride.autoWatch = true;
 
-    configOverride.webpack.module.postLoaders = configOverride.webpack.module.postLoaders.filter(notInstrumentPostLoader);
-
     configOverride.reporters = configOverride.reporters.filter(reporter => reporter != 'coverage');
 
   }
 
   config.set(configOverride);
 };
-
-function notInstrumentPostLoader(postLoader) {
-  var hasIstanbulLoader = postLoader.loaders.some(loader => loader == 'istanbul-instrumenter');
-
-  return ! hasIstanbulLoader;
-}

@@ -20,12 +20,11 @@ var paths = {
   clientSrc: clientSrc,
   localDevRoot: 'buildOutput/',
   buildOutput: path.join(clientRoot, 'buildOutput'),
+  codegen: path.join(clientRoot, 'codegen'),
   nodeModules: path.join(clientRoot, 'node_modules'),
   typings: path.join(clientRoot, 'typings'),
   coverage: path.join(clientRoot, 'coverage'),
 
-  mainEntry: path.join(clientSrc, 'main.browser.ts'),
-  vendorEntry: path.join(clientSrc, 'vendor.ts'),
   testEntry: path.join(clientSrc, 'karma-entry.js'),
   staticFiles: path.join(clientSrc, 'static'),
 };
@@ -43,38 +42,41 @@ var files = {
 var patterns = {
   testSources: path.join(paths.clientSrc, '**/*.spec.ts'),
   appSources: path.join(paths.clientSrc, '**/!(*.spec).ts'),
+  // The (\\|\/) piece accounts for path separators in *nix and Windows
+  angularContext: /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
 };
 
-var preLoaders = {
-
-  tslint: {
-    test: /\.ts$/,
-    loaders: ['tslint-loader'],
-    include: [
-      paths.clientSrc,
-    ],
-    exclude: [
-      paths.nodeModules, // skip all node modules
-      paths.typings, // skip all type definitions
-      paths.buildOutput, // skip output
-    ],
-  },
-
-  // Source map loader support for *.js files
-  // Extracts SourceMaps for source files that are added as sourceMappingURL comment.
-  javascriptTest: {
-    test: /\.js$/,
-    loaders: ['source-map-loader'],
-    exclude: [
-      // these packages have problems with their sourcemaps
-      path.join(paths.nodeModules, '@angular'),
-      path.join(paths.nodeModules, 'rxjs'),
-    ]
-  },
-
-}
-
 var loaders = {
+
+  pre: {
+
+    tslint: {
+      test: /\.ts$/,
+      loaders: ['tslint-loader'],
+      include: [
+        paths.clientSrc,
+      ],
+      exclude: [
+        paths.nodeModules, // skip all node modules
+        paths.typings, // skip all type definitions
+        paths.buildOutput, // skip output
+        paths.codegen, // skip (AOT) generated code
+      ],
+    },
+
+    // Source map loader support for *.js files
+    // Extracts SourceMaps for source files that are added as sourceMappingURL comment.
+    javascriptTest: {
+      test: /\.js$/,
+      loaders: ['source-map-loader'],
+      exclude: [
+        // these packages have problems with their sourcemaps
+        path.join(paths.nodeModules, '@angular'),
+        path.join(paths.nodeModules, 'rxjs'),
+      ]
+    },
+
+  },
 
   // all files with a `.ts` extension will be handled by `ts-loader`
   // chained to `angular2-template-loader` so to convert template/style URLs into inlined template/styles
@@ -84,6 +86,7 @@ var loaders = {
     loaders: ['awesome-typescript-loader', 'angular2-template-loader'],
     include: [
       paths.clientSrc,
+      paths.codegen,
     ],
     exclude: [
       paths.nodeModules, // skip all node modules
@@ -103,7 +106,24 @@ var loaders = {
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
       paths.buildOutput, // skip output
+      paths.codegen, // skip (AOT) generated code
       /\.(e2e|async)\.ts$/, // skip end-to-end test and async TS files
+    ],
+  },
+
+  json: {
+    test: /\.json$/,
+    loaders: ['json-loader'],
+    include: [
+      paths.clientSrc,
+      // See https://github.com/webpack/webpack/issues/592
+      paths.nodeModules, // consider all node modules
+    ],
+    exclude: [
+      paths.typings, // skip all type definitions
+      paths.buildOutput, // skip output
+      paths.codegen, // skip (AOT) generated code
+      /\.(spec|e2e|async)\.ts$/, // skip all test and async TS files
     ],
   },
 
@@ -119,6 +139,7 @@ var loaders = {
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
       paths.buildOutput, // skip output
+      paths.codegen, // skip (AOT) generated code
     ],
   },
 
@@ -134,6 +155,7 @@ var loaders = {
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
       paths.buildOutput, // skip output
+      paths.codegen, // skip (AOT) generated code
     ],
   },
 
@@ -149,6 +171,7 @@ var loaders = {
     exclude: [
       paths.typings, // skip all type definitions
       paths.buildOutput, // skip output
+      paths.codegen, // skip (AOT) generated code
     ],
   },
 
@@ -163,27 +186,29 @@ var loaders = {
       paths.nodeModules, // skip all node modules
       paths.typings, // skip all type definitions
       paths.buildOutput, // skip output
+      paths.codegen, // skip (AOT) generated code
     ],
   },
 
-};
+  post: {
 
-var postLoaders = {
+    // instrument only code that isn't test or third-party
+    // delay coverage until after tests are run, fixing transpiled source coverage error
+    istanbul: {
+      test: /\.(js|ts)$/,
+      loaders: ['istanbul-instrumenter-loader'],
+      include: [
+        paths.clientSrc,
+      ],
+      exclude: [
+        /\.(e2e|spec)\.ts$/, // skip all test files
+        paths.nodeModules, // skip all node modules
+        paths.typings, // skip all type definitions
+        paths.buildOutput, // skip output
+        paths.codegen, // skip (AOT) generated code
+      ],
+    },
 
-  // instrument only code that isn't test or third-party
-  // delay coverage until after tests are run, fixing transpiled source coverage error
-  istanbul: {
-    test: /\.(js|ts)$/,
-    loaders: ['istanbul-instrumenter-loader'],
-    include: [
-      paths.clientSrc,
-    ],
-    exclude: [
-      /\.(e2e|spec)\.ts$/, // skip all test files
-      paths.nodeModules, // skip all node modules
-      paths.typings, // skip all type definitions
-      paths.buildOutput, // skip output
-    ],
   },
 
 };
@@ -201,7 +226,7 @@ var postcss = [
 ];
 
 // resolve files using only those extensions
-var resolvedExtensions = ['', '.ts', '.js'];
+var resolvedExtensions = ['.ts', '.js', '.json'];
 
 function buildDefines() {
   var packageDef = require('./package.json');
@@ -212,19 +237,42 @@ function buildDefines() {
   };
 }
 
-var common = {
-  urls: urls,
-  ports: ports,
-  paths: paths,
-  files: files,
-  patterns: patterns,
-  preLoaders: preLoaders,
-  loaders: loaders,
-  postLoaders: postLoaders,
-  noParse: noParse,
-  postcss: postcss,
-  resolvedExtensions: resolvedExtensions,
-  buildDefines: buildDefines,
+var defaultOptions = {
+  isAot: false,
 };
 
-module.exports = common;
+function buildCommon(passedOptions) {
+
+  var options = Object.assign({}, defaultOptions, passedOptions);
+
+  var isAot = options.isAot;
+
+  var customPaths = Object.assign({}, paths, {
+
+    mainEntry: isAot
+      ? path.join(clientSrc, 'main.browser-aot.ts')
+      : path.join(clientSrc, 'main.browser.ts'),
+
+    vendorEntry: isAot
+      ? path.join(clientSrc, 'vendor-aot.ts')
+      : path.join(clientSrc, 'vendor.ts'),
+
+  });
+
+  var common = {
+    urls: urls,
+    ports: ports,
+    paths: customPaths,
+    files: files,
+    patterns: patterns,
+    loaders: loaders,
+    noParse: noParse,
+    postcss: postcss,
+    resolvedExtensions: resolvedExtensions,
+    buildDefines: buildDefines,
+  };
+
+  return common;
+}
+
+module.exports = buildCommon;

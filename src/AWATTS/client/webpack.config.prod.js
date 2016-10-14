@@ -1,6 +1,9 @@
 var webpack = require('webpack');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
-var common = require('./webpack.common.js');
+var buildCommon = require('./webpack.common.js');
+var common = buildCommon({
+  isAot: true,
+});
 
 // ensure production environment
 process.env.NODE_ENV = 'production';
@@ -9,8 +12,6 @@ var config = {
 
   // Source maps are completely regenerated for each chunk at each build
   devtool: 'source-map',
-
-  debug: false,
 
   // Set base directory for resolving entry points
   context: common.paths.clientSrc,
@@ -39,13 +40,14 @@ var config = {
 
     preLoaders: [
 
-      common.preLoaders.tslint,
+      common.loaders.pre.tslint,
 
     ],
 
     loaders: [
 
       common.loaders.typescript,
+      common.loaders.json,
       common.loaders.componentSass,
       common.loaders.componentCss,
       common.loaders.globalCss,
@@ -58,8 +60,6 @@ var config = {
 
   },
 
-  postcss: common.postcss,
-
   resolve: {
 
     extensions: common.resolvedExtensions,
@@ -69,6 +69,26 @@ var config = {
   plugins: [
 
     new webpack.DefinePlugin(common.buildDefines()),
+
+    // Until loaders are updated, use the LoaderOptionsPlugin to pass custom properties to third-party loaders
+    new webpack.LoaderOptionsPlugin({
+
+      // (For UglifyJsPlugin) Put loaders into minimize mode
+      debug: false,
+
+      options: {
+
+        postcss: common.postcss,
+
+      },
+    }),
+
+    // Provides context to Angular's use of System.import
+    // See https://github.com/angular/angular/issues/11580
+    new webpack.ContextReplacementPlugin(
+      common.patterns.angularContext,
+      common.paths.clientSrc
+    ),
 
     new webpack.optimize.CommonsChunkPlugin({
       name: ['main', 'vendor'],
@@ -82,13 +102,13 @@ var config = {
 
       // [prod]
       beautify: false,
-      /* disable mangling because of a bug in angular2 beta.X
-       * TODO enable mangling as soon as angular2 fixes that
       mangle: {
         screw_ie8 : true,
+        keep_fnames: true,
       },
-      */
+      /* To disable mangling for any reason, replace with:
       mangle: false,
+      */
       compress: {
         warnings: false,
         screw_ie8: true,
@@ -115,11 +135,9 @@ var config = {
       */
     }),
 
-    // Get the smallest module/chunk id length for often used modules/chunks
-    new webpack.optimize.OccurenceOrderPlugin(true),
-
     // Do not duplicate modules in the output
-    new webpack.optimize.DedupePlugin(),
+    // TODO enable again when this plugin is fixed. See https://github.com/webpack/webpack/issues/2644
+    //new webpack.optimize.DedupePlugin(),
 
     // Only emit files when there are no errors
     new webpack.NoErrorsPlugin(),

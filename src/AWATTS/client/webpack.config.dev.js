@@ -2,7 +2,8 @@ var url = require('url');
 var webpack = require('webpack');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
-var common = require('./webpack.common.js');
+var buildCommon = require('./webpack.common.js');
+var common = buildCommon();
 
 // ensure development environment
 process.env.NODE_ENV = 'development';
@@ -20,9 +21,6 @@ var config = {
   // Makes sure that breakpoints are hit, and variable values are shown
   // 'cheap-module-eval-source-map' is quicker, but breakpoints don't work
   devtool: 'source-map',
-
-  // Switch loaders to debug mode
-  debug: true,
 
   // Cache generated modules and chunks to improve performance in incremental builds
   cache: true,
@@ -64,13 +62,14 @@ var config = {
 
     preLoaders: [
 
-      common.preLoaders.tslint,
+      common.loaders.pre.tslint,
 
     ],
 
     loaders: [
 
       common.loaders.typescript,
+      common.loaders.json,
       common.loaders.componentSass,
       common.loaders.componentCss,
       common.loaders.globalCss,
@@ -83,8 +82,6 @@ var config = {
 
   },
 
-  postcss: common.postcss,
-
   resolve: {
 
     extensions: common.resolvedExtensions,
@@ -94,6 +91,26 @@ var config = {
   plugins: [
 
     new webpack.DefinePlugin(common.buildDefines()),
+
+    // Until loaders are updated, use the LoaderOptionsPlugin to pass custom properties to third-party loaders
+    new webpack.LoaderOptionsPlugin({
+
+      // (For UglifyJsPlugin) Put loaders into debug mode
+      debug: true,
+
+      options: {
+
+        postcss: common.postcss,
+
+      },
+    }),
+
+    // Provides context to Angular's use of System.import
+    // See https://github.com/angular/angular/issues/11580
+    new webpack.ContextReplacementPlugin(
+      common.patterns.angularContext,
+      common.paths.clientSrc
+    ),
 
     // Allow setting option in tsconfig, so that type checking happens in a separate process and webpack doesn't have to wait
     new ForkCheckerPlugin(),
@@ -152,19 +169,26 @@ if (devMode == 'reload') {
 
     port: common.ports.reload,
 
+    // webpack dev server will serve bundles from memory at this relative URL path
     publicPath: common.urls.public,
 
+    // webpack dev server will serve files from this directory
     contentBase: common.paths.localDevRoot,
 
     proxy: {
       // proxied to backend web server
-      '/*' : defaultServerUrl,
+      '/' : {
+        target: defaultServerUrl,
+        secure: false,
+        prependPath: false,
+      },
     },
+
+    // For automatic page refresh, enable the 'webpack-dev-server/client?...' entry
+    inline: true,
 
     // Enable Hot Module Replacement
     hot: true,
-
-    inline: true,
 
     // Set this as true if you want to access dev server from arbitrary url.
     // This is handy if you are using a html5 router.

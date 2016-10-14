@@ -1,12 +1,12 @@
 {
   "globalDependencies": {
     "core-js": "registry:dt/core-js#0.0.0+20160914114559",
-    "node": "registry:dt/node#6.0.0+20160915134512"
+    "node": "registry:dt/node#6.0.0+20161010101523"
   },
   "globalDevDependencies": {
-    "jasmine": "registry:dt/jasmine#2.2.0+20160621224255",
-    "source-map": "registry:dt/source-map#0.0.0+20160317120654",
+    "jasmine": "registry:dt/jasmine#2.5.0+20161003201800",
+    "source-map": "registry:dt/source-map#0.0.0+20161003134342",
     "uglify-js": "registry:dt/uglify-js#2.6.1+20160316155526",
-    "webpack": "registry:dt/webpack#1.12.9+20160724112410"
+    "webpack": "registry:dt/webpack#1.12.9+20160927034556"
   }
 }

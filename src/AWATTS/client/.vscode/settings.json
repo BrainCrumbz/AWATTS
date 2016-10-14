@@ -1,11 +1,12 @@
 // Place your settings in this file to overwrite default and user settings.
 {
   "files.trimTrailingWhitespace": true,
-  
+
   "editor.tabSize": 2,
-  
+
   "files.exclude": {
     "**/buildOutput": true,
+    "**/codegen": true,
     "**/coverage": true,
     "**/node_modules": true,
     "**/typings": true,
@@ -13,7 +14,7 @@
     "**/*.js": { "when": "$(basename).ts" },
     "**/*.js.map": true
   },
-  
+
   "typescript.tsdk": "node_modules/typescript/lib"
-  
+
 }
