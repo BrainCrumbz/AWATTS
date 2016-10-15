@@ -116,7 +116,9 @@ var config = {
         drop_console: true,
         dead_code: true,
       },
-      comments: false,
+      output: {
+        comments: false,
+      },
 
       // [debug]
       /*
@@ -131,7 +133,9 @@ var config = {
         dead_code: false,
         unused: false,
       },
-      comments: true,
+      output: {
+        comments: true,
+      },
       */
     }),
 

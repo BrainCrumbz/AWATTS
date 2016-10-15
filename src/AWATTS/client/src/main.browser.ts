@@ -3,9 +3,6 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 
-// Here import global styles common to all app modules
-import './shared/common-styles.css';
-
 if (NODE_ENV === 'production') {
   enableProdMode();
 }

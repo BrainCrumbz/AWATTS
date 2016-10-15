@@ -198,7 +198,11 @@ if (devMode == 'reload') {
 
     // The rest is terminal configuration
     console: true,
+    colors: true,
+    progress: true,
     quiet: false,
+    displayErrorDetails: true,
+    displayCached: true,
     noInfo: true,
     stats: { colors: true },
 
