@@ -13,8 +13,8 @@ import { appProviders } from '../app/app.providers';
  * there seems to be issues with AOT.
 // Here import global styles common to all app modules
 require('../shared/common-styles.css');
-import '../shared/common-styles.css';
 */
+import '../shared/common-styles.css';
 
 @NgModule({
   imports: [
