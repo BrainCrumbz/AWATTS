@@ -9,5 +9,5 @@ interface ErrorStackTraceLimit {
   stackTraceLimit: number;
 }
 
-// Extend typings
+// Extend type definitions
 interface ErrorConstructor extends ErrorStackTraceLimit {}

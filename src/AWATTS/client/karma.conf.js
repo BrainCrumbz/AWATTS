@@ -31,7 +31,6 @@ module.exports = function(config) {
     // files to exclude
     exclude: [
       common.paths.nodeModules, // skip all node modules
-      common.paths.typings, // skip all type definitions
       common.paths.buildOutput, // skip output
     ],
 

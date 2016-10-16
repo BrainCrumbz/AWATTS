@@ -14,9 +14,9 @@
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
-    "lib": [
-      "dom",
-      "es6"
+    "types": [
+      "core-js",
+      "node"
     ]
   },
   "exclude": [
@@ -26,9 +26,7 @@
     "buildOutput",
     "codegen",
     "coverage",
-    "node_modules",
-    "typings/globals",
-    "typings/index.d.ts"
+    "node_modules"
   ],
   "angularCompilerOptions": {
    "genDir": "codegen",

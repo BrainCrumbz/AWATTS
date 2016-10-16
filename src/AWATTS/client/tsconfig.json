@@ -16,14 +16,18 @@
     "lib": [
       "dom",
       "es6"
+    ],
+    "types": [
+      "core-js",
+      "jasmine",
+      "node"
     ]
   },
   "exclude": [
     "buildOutput",
     "codegen",
     "coverage",
-    "node_modules",
-    "typings/index.d.ts"
+    "node_modules"
   ],
   "awesomeTypescriptLoaderOptions": {
     "forkChecker": true,
