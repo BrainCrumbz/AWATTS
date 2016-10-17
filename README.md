@@ -8,10 +8,13 @@ A Visual Studio 2015 solution showing how to start up a project involving follow
 
 * [ASP.NET Core](https://github.com/aspnet/Home) (formerly ASP.NET 5) to serve web pages,
 * [Angular 2](https://angular.io/) framework for client-side Single Page Application,
-* [TypeScript](http://www.typescriptlang.org/) as an alternative to JavaScript to write client code,
-* [WebPack](https://webpack.github.io/) module bundler to process and build client source files,
-* WebPack [Hot Module Replacement](https://webpack.github.io/docs/hot-module-replacement.html) to
+  - Ahead Of Time (AOT) compilation for a quicker application startup
+* [TypeScript](http://www.typescriptlang.org/) 2 as an alternative to JavaScript to write client code,
+  - @types to include type definitions of external code
+* [WebPack](https://webpack.github.io/) 2 module bundler to process and build client source files,
+  - WebPack [Hot Module Replacement](https://webpack.github.io/docs/hot-module-replacement.html) to
 re-compile and reload web page when client source code changes,
+  - Development, test and production builds
 * [Karma](https://karma-runner.github.io) test runner and [Jasmine](http://jasmine.github.io/) BDD
 testing library to unit test client source code.
 
