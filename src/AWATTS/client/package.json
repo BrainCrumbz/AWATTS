@@ -12,10 +12,10 @@
         "precompile-prod": "npm run clean",
 
     "build": "npm run build-dev",
-      "build-dev": "webpack --config ./webpack.config.dev.js --display-error-details --profile --colors",
+      "build-dev": "webpack --config ./webpack.config.dev.js --display-error-details --progress --profile --colors",
         "prebuild-dev": "npm run clean",
       "build-watch": "npm run build-dev -- --watch",
-      "build-prod": "webpack --config ./webpack.config.prod.js --display-error-details --profile --colors",
+      "build-prod": "webpack --config ./webpack.config.prod.js --display-error-details --progress --profile --colors",
         "prebuild-prod": "npm run compile-prod",
 
     "start": "npm run serve",
