@@ -60,20 +60,21 @@ var config = {
 
   module: {
 
-    preLoaders: [
-
-      common.loaders.pre.tslint,
-
-    ],
-
     loaders: [
 
+      // Pre-loaders
+      common.loaders.pre.tslint,
+
+      // Loaders
       common.loaders.typescript,
       common.loaders.json,
       common.loaders.componentSass,
       common.loaders.componentCss,
       common.loaders.globalCss,
       common.loaders.html,
+
+      // Post-loaders
+      // none
 
     ],
 
@@ -150,19 +151,6 @@ if (devMode == 'reload') {
     hostname: hostname,
     port: common.ports.reload,
   });
-
-  config.entry['main'] = [
-
-    // For automatic page refresh, inline mode
-    'webpack-dev-server/client?' + reloadServerUrl,
-
-    // For hot module replacement
-    'webpack/hot/dev-server',
-
-    // Client application main entry point
-    common.paths.mainEntry,
-
-  ];
 
   // webpack dev server configuration
   config.devServer = {

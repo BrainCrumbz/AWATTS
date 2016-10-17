@@ -28,15 +28,13 @@ var config = {
 
   module: {
 
-    preLoaders: [
+    loaders: [
 
+      // Pre-loaders
       common.loaders.pre.tslint,
       common.loaders.pre.javascriptTest,
 
-    ],
-
-    loaders: [
-
+      // Loaders
       common.loaders.typescriptTest,
       common.loaders.json,
       common.loaders.componentSass,
@@ -44,10 +42,7 @@ var config = {
       common.loaders.globalCss,
       common.loaders.html,
 
-    ],
-
-    postLoaders: [
-
+      // Post-loaders
       // TODO enable when it is not scrambling source maps
       //common.loaders.post.istanbul,
 

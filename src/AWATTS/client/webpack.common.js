@@ -60,6 +60,7 @@ var loaders = {
         paths.buildOutput, // skip output
         paths.codegen, // skip (AOT) generated code
       ],
+      enforce: 'pre',
     },
 
     // Source map loader support for *.js files
@@ -71,7 +72,8 @@ var loaders = {
         // these packages have problems with their sourcemaps
         path.join(paths.nodeModules, '@angular'),
         path.join(paths.nodeModules, 'rxjs'),
-      ]
+      ],
+      enforce: 'pre',
     },
 
   },
@@ -156,19 +158,7 @@ var loaders = {
   // NOTE: this assumes that their filename doesn't contain `component`
   globalCss: {
     test: /^(?!.*component).*\.css$/,
-    loaders: [{
-      loader: 'style-loader',
-    },{
-      loader: 'css-loader',
-      options: {
-        sourceMap: true,
-      },
-    }, {
-      loader: 'postcss-loader',
-      options: {
-        sourceMap: true,
-      },
-    }],
+    loaders: ['style-loader', 'css-loader?sourceMap', 'postcss-loader?sourceMap'],
     include: [
       paths.clientSrc,
       paths.nodeModules, // allow to import CSS from third-party libraries
@@ -209,6 +199,7 @@ var loaders = {
         paths.buildOutput, // skip output
         paths.codegen, // skip (AOT) generated code
       ],
+      enforce: 'post',
     },
 
   },

@@ -38,20 +38,21 @@ var config = {
 
   module: {
 
-    preLoaders: [
-
-      common.loaders.pre.tslint,
-
-    ],
-
     loaders: [
 
+      // Pre-loaders
+      common.loaders.pre.tslint,
+
+      // Loaders
       common.loaders.typescript,
       common.loaders.json,
       common.loaders.componentSass,
       common.loaders.componentCss,
       common.loaders.globalCss,
       common.loaders.html,
+
+      // Post-loaders
+      // none
 
     ],
 
