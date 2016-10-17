@@ -22,7 +22,6 @@
 
     "serve": "npm run serve-dev",
       "serve-dev": "set DEV_MODE=reload&&webpack-dev-server --config ./webpack.config.dev.js",
-      "serve-prod": "echo \"This is only to run preserve-prod command\" ",
 
     "test": "karma start",
       "test-debug": "set TEST_MODE=debug&&karma start",
